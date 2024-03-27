@@ -8,23 +8,50 @@
 
 /* Begin PBXBuildFile section */
 		C7272C1D2BB1757A00B1397C /* sevenOclockApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7272C1C2BB1757A00B1397C /* sevenOclockApp.swift */; };
-		C7272C1F2BB1757A00B1397C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7272C1E2BB1757A00B1397C /* ContentView.swift */; };
 		C7272C212BB1757C00B1397C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7272C202BB1757C00B1397C /* Assets.xcassets */; };
 		C7272C242BB1757C00B1397C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7272C232BB1757C00B1397C /* Preview Assets.xcassets */; };
 		C7AFB8762BB1C78C0023C46F /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB8752BB1C78C0023C46F /* Food.swift */; };
 		C7AFB87A2BB1C9970023C46F /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB8792BB1C9970023C46F /* SearchBar.swift */; };
 		C7AFB87D2BB255600023C46F /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB87C2BB255600023C46F /* UIApplication.swift */; };
+		C7AFB8812BB2F5D40023C46F /* MyFridgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB8802BB2F5D40023C46F /* MyFridgeView.swift */; };
+		C7AFB8852BB2F7660023C46F /* MyCapsule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB8842BB2F7660023C46F /* MyCapsule.swift */; };
+		C7AFB8872BB30A600023C46F /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB8862BB30A600023C46F /* Category.swift */; };
+		C7AFB88D2BB31FD50023C46F /* SUITE-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = C7AFB8892BB31FD50023C46F /* SUITE-Regular.otf */; };
+		C7AFB88E2BB31FD50023C46F /* SUITE-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C7AFB88A2BB31FD50023C46F /* SUITE-SemiBold.otf */; };
+		C7AFB88F2BB31FD50023C46F /* SUITE-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = C7AFB88B2BB31FD50023C46F /* SUITE-Medium.otf */; };
+		C7AFB8902BB31FD50023C46F /* SUITE-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = C7AFB88C2BB31FD50023C46F /* SUITE-Light.otf */; };
+		C7AFB8922BB31FDE0023C46F /* SUITE-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C7AFB8912BB31FDE0023C46F /* SUITE-Bold.otf */; };
+		C7AFB8952BB320D60023C46F /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB8942BB320D60023C46F /* Font.swift */; };
+		C7AFB8972BB3A4580023C46F /* Preservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB8962BB3A4580023C46F /* Preservation.swift */; };
+		C7AFB8992BB3A6F50023C46F /* SelectionBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB8982BB3A6F50023C46F /* SelectionBar.swift */; };
+		C7AFB89B2BB3A9D10023C46F /* SortOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB89A2BB3A9D10023C46F /* SortOption.swift */; };
+		C7AFB89D2BB3C9E00023C46F /* FoodItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB89C2BB3C9E00023C46F /* FoodItem.swift */; };
+		C7AFB89F2BB3E9A70023C46F /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB89E2BB3E9A70023C46F /* Date.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		C7272C192BB1757A00B1397C /* sevenOclock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sevenOclock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7272C1C2BB1757A00B1397C /* sevenOclockApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sevenOclockApp.swift; sourceTree = "<group>"; };
-		C7272C1E2BB1757A00B1397C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C7272C202BB1757C00B1397C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C7272C232BB1757C00B1397C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C7AFB8752BB1C78C0023C46F /* Food.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
 		C7AFB8792BB1C9970023C46F /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		C7AFB87C2BB255600023C46F /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
+		C7AFB8802BB2F5D40023C46F /* MyFridgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFridgeView.swift; sourceTree = "<group>"; };
+		C7AFB8842BB2F7660023C46F /* MyCapsule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCapsule.swift; sourceTree = "<group>"; };
+		C7AFB8862BB30A600023C46F /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		C7AFB8892BB31FD50023C46F /* SUITE-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUITE-Regular.otf"; sourceTree = "<group>"; };
+		C7AFB88A2BB31FD50023C46F /* SUITE-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUITE-SemiBold.otf"; sourceTree = "<group>"; };
+		C7AFB88B2BB31FD50023C46F /* SUITE-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUITE-Medium.otf"; sourceTree = "<group>"; };
+		C7AFB88C2BB31FD50023C46F /* SUITE-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUITE-Light.otf"; sourceTree = "<group>"; };
+		C7AFB8912BB31FDE0023C46F /* SUITE-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUITE-Bold.otf"; sourceTree = "<group>"; };
+		C7AFB8932BB320170023C46F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		C7AFB8942BB320D60023C46F /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		C7AFB8962BB3A4580023C46F /* Preservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preservation.swift; sourceTree = "<group>"; };
+		C7AFB8982BB3A6F50023C46F /* SelectionBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionBar.swift; sourceTree = "<group>"; };
+		C7AFB89A2BB3A9D10023C46F /* SortOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOption.swift; sourceTree = "<group>"; };
+		C7AFB89C2BB3C9E00023C46F /* FoodItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItem.swift; sourceTree = "<group>"; };
+		C7AFB89E2BB3E9A70023C46F /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,11 +84,13 @@
 		C7272C1B2BB1757A00B1397C /* sevenOclock */ = {
 			isa = PBXGroup;
 			children = (
+				C7AFB8932BB320170023C46F /* Info.plist */,
 				C7272C1C2BB1757A00B1397C /* sevenOclockApp.swift */,
 				C7AFB87F2BB2F47B0023C46F /* View */,
 				C7AFB8782BB1C7BE0023C46F /* Model */,
 				C7AFB87B2BB1C9A20023C46F /* Reusable */,
 				C7AFB87E2BB2F45E0023C46F /* Extension */,
+				C7AFB8882BB31FB10023C46F /* Fonts */,
 				C7272C202BB1757C00B1397C /* Assets.xcassets */,
 				C7272C222BB1757C00B1397C /* Preview Content */,
 			);
@@ -80,6 +109,9 @@
 			isa = PBXGroup;
 			children = (
 				C7AFB8752BB1C78C0023C46F /* Food.swift */,
+				C7AFB8862BB30A600023C46F /* Category.swift */,
+				C7AFB8962BB3A4580023C46F /* Preservation.swift */,
+				C7AFB89A2BB3A9D10023C46F /* SortOption.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -88,6 +120,9 @@
 			isa = PBXGroup;
 			children = (
 				C7AFB8792BB1C9970023C46F /* SearchBar.swift */,
+				C7AFB8842BB2F7660023C46F /* MyCapsule.swift */,
+				C7AFB8982BB3A6F50023C46F /* SelectionBar.swift */,
+				C7AFB89C2BB3C9E00023C46F /* FoodItem.swift */,
 			);
 			path = Reusable;
 			sourceTree = "<group>";
@@ -96,6 +131,8 @@
 			isa = PBXGroup;
 			children = (
 				C7AFB87C2BB255600023C46F /* UIApplication.swift */,
+				C7AFB8942BB320D60023C46F /* Font.swift */,
+				C7AFB89E2BB3E9A70023C46F /* Date.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -103,9 +140,21 @@
 		C7AFB87F2BB2F47B0023C46F /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C7272C1E2BB1757A00B1397C /* ContentView.swift */,
+				C7AFB8802BB2F5D40023C46F /* MyFridgeView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		C7AFB8882BB31FB10023C46F /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				C7AFB8912BB31FDE0023C46F /* SUITE-Bold.otf */,
+				C7AFB88C2BB31FD50023C46F /* SUITE-Light.otf */,
+				C7AFB88B2BB31FD50023C46F /* SUITE-Medium.otf */,
+				C7AFB8892BB31FD50023C46F /* SUITE-Regular.otf */,
+				C7AFB88A2BB31FD50023C46F /* SUITE-SemiBold.otf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -166,8 +215,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7AFB88F2BB31FD50023C46F /* SUITE-Medium.otf in Resources */,
+				C7AFB8902BB31FD50023C46F /* SUITE-Light.otf in Resources */,
 				C7272C242BB1757C00B1397C /* Preview Assets.xcassets in Resources */,
+				C7AFB88D2BB31FD50023C46F /* SUITE-Regular.otf in Resources */,
 				C7272C212BB1757C00B1397C /* Assets.xcassets in Resources */,
+				C7AFB88E2BB31FD50023C46F /* SUITE-SemiBold.otf in Resources */,
+				C7AFB8922BB31FDE0023C46F /* SUITE-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,11 +232,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C7272C1F2BB1757A00B1397C /* ContentView.swift in Sources */,
 				C7AFB87A2BB1C9970023C46F /* SearchBar.swift in Sources */,
 				C7272C1D2BB1757A00B1397C /* sevenOclockApp.swift in Sources */,
+				C7AFB8812BB2F5D40023C46F /* MyFridgeView.swift in Sources */,
+				C7AFB89B2BB3A9D10023C46F /* SortOption.swift in Sources */,
+				C7AFB8852BB2F7660023C46F /* MyCapsule.swift in Sources */,
+				C7AFB8952BB320D60023C46F /* Font.swift in Sources */,
 				C7AFB87D2BB255600023C46F /* UIApplication.swift in Sources */,
 				C7AFB8762BB1C78C0023C46F /* Food.swift in Sources */,
+				C7AFB89F2BB3E9A70023C46F /* Date.swift in Sources */,
+				C7AFB89D2BB3C9E00023C46F /* FoodItem.swift in Sources */,
+				C7AFB8872BB30A600023C46F /* Category.swift in Sources */,
+				C7AFB8972BB3A4580023C46F /* Preservation.swift in Sources */,
+				C7AFB8992BB3A6F50023C46F /* SelectionBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +381,7 @@
 				DEVELOPMENT_TEAM = HY8Y957QK3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = sevenOclock/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -354,6 +417,7 @@
 				DEVELOPMENT_TEAM = HY8Y957QK3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = sevenOclock/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

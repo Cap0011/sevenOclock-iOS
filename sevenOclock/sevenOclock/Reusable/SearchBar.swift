@@ -18,7 +18,7 @@ struct SearchBar: View {
     var body: some View {
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 17)
-                .stroke(lineWidth: /*@START_MENU_TOKEN@*/1.0/*@END_MENU_TOKEN@*/)
+                .stroke(lineWidth: 1.5)
                 .frame(height: 38)
             HStack {
                 Image(systemName: "magnifyingglass")
@@ -60,6 +60,7 @@ struct SearchBar: View {
             }
         }
         .foregroundStyle(.gray)
+        .font(.suite(.regular, size: 15))
     }
 }
 
