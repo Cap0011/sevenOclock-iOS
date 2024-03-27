@@ -27,6 +27,7 @@
 		C7AFB89B2BB3A9D10023C46F /* SortOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB89A2BB3A9D10023C46F /* SortOption.swift */; };
 		C7AFB89D2BB3C9E00023C46F /* FoodItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB89C2BB3C9E00023C46F /* FoodItem.swift */; };
 		C7AFB89F2BB3E9A70023C46F /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB89E2BB3E9A70023C46F /* Date.swift */; };
+		C7AFB8A12BB44C350023C46F /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB8A02BB44C350023C46F /* MainView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		C7AFB89A2BB3A9D10023C46F /* SortOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOption.swift; sourceTree = "<group>"; };
 		C7AFB89C2BB3C9E00023C46F /* FoodItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItem.swift; sourceTree = "<group>"; };
 		C7AFB89E2BB3E9A70023C46F /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		C7AFB8A02BB44C350023C46F /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				C7AFB8802BB2F5D40023C46F /* MyFridgeView.swift */,
+				C7AFB8A02BB44C350023C46F /* MainView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -233,6 +236,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7AFB87A2BB1C9970023C46F /* SearchBar.swift in Sources */,
+				C7AFB8A12BB44C350023C46F /* MainView.swift in Sources */,
 				C7272C1D2BB1757A00B1397C /* sevenOclockApp.swift in Sources */,
 				C7AFB8812BB2F5D40023C46F /* MyFridgeView.swift in Sources */,
 				C7AFB89B2BB3A9D10023C46F /* SortOption.swift in Sources */,

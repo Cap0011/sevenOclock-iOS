@@ -38,7 +38,7 @@ struct MyFridgeView: View {
             
             radioButtonGroup
                 .padding(.horizontal, 25)
-                .padding(.top, 15)
+                .padding(.vertical, 15)
         }
     }
     
