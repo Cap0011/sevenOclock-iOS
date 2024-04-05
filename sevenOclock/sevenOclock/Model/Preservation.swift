@@ -25,4 +25,12 @@ enum Preservation: String, CaseIterable {
             return "All"
         }
     }
+    
+    static func allCasesStringArray() -> [String] {
+        return Preservation.allCases.map { $0.rawValue }
+    }
+    
+    static func casesStringArray() -> [String] {
+        return Preservation.allCasesStringArray().filter { $0 != "전체" }
+    }
 }

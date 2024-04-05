@@ -23,4 +23,12 @@ enum Category: String, CaseIterable {
     case snack = "간식"
     case beverage = "음료"
     case others = "기타"
+    
+    static func allCasesStringArray() -> [String] {
+        return Category.allCases.map { $0.rawValue }
+    }
+    
+    static func casesStringArray() -> [String] {
+        return Category.allCasesStringArray().filter { $0 != "전체" }
+    }
 }

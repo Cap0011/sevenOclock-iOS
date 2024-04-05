@@ -11,34 +11,56 @@ struct MyFridgeView: View {
     @State var searchTitle = ""
     @State var selectedCategory = Category.all
     @State var selectedPreservation = Preservation.fridge
-    @State var selectedSortOption = SortOption.byDateDESC
+    @State var selectedSortOption = SortOption.byDateDESC.rawValue
     @State var isDateTagSelected = false
     @State var viewBySell = true
+    @State var isShowingAddConfirmation = false
     
     var body: some View {
-        VStack(alignment: .trailing, spacing: 0) {
-            SearchBar(searchTitle: $searchTitle)
-                .padding(.top, 15)
-                .padding(.horizontal, 25)
-                .padding(.bottom, 10)
-            
-            category
-                .padding(.bottom, 20)
-            
-            segmentedPicker
-                .padding(.horizontal, 25)
-            
-            sortSpace
-                .padding(.horizontal, 25)
-                .padding(.top, 23)
-            
-            FoodGridView(foods: [Food.dummyData, Food.dummyData1, Food.dummyData2, Food.dummyData3], backgroundColour: .blue, preservation: selectedPreservation, viewBySell: viewBySell)
-                .padding(.horizontal, 20)
-                .padding(.top, 18)
-            
-            radioButtonGroup
-                .padding(.horizontal, 25)
-                .padding(.vertical, 15)
+        NavigationView {
+            VStack(alignment: .trailing, spacing: 0) {
+                SearchBar(searchTitle: $searchTitle)
+                    .padding(.top, 15)
+                    .padding(.horizontal, 25)
+                    .padding(.bottom, 10)
+                
+                category
+                    .padding(.bottom, 20)
+                
+                segmentedPicker
+                    .padding(.horizontal, 25)
+                
+                sortSpace
+                    .padding(.horizontal, 25)
+                    .padding(.top, 23)
+                
+                FoodGridView(foods: [Food.dummyData, Food.dummyData1, Food.dummyData2, Food.dummyData3], backgroundColour: .blue, preservation: selectedPreservation, viewBySell: viewBySell)
+                    .padding(.horizontal, 20)
+                    .padding(.top, 18)
+                
+                radioButtonGroup
+                    .padding(.horizontal, 25)
+                    .padding(.vertical, 15)
+            }
+            .confirmationDialog("Add", isPresented: $isShowingAddConfirmation) {
+                Text("영수증 촬영")
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Image("add")
+                        .onTapGesture {
+                            isShowingAddConfirmation = true
+                        }
+                }
+                ToolbarItem(placement: .principal) {
+                    Text("나의 냉장고")
+                        .font(.suite(.semibold, size: 17))
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Image(systemName: "gearshape.fill")
+                }
+            }
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
     
@@ -69,7 +91,7 @@ struct MyFridgeView: View {
     
     var sortSpace: some View {
         HStack {
-            SelectionBar(selections: [SortOption.byDateDESC, SortOption.countASCE, SortOption.countDESC, SortOption.dateASCE, SortOption.dateDESC], selected: $selectedSortOption)
+            SelectionBar(selections: SortOption.allCasesStringArray(), selected: $selectedSortOption)
             
             Spacer()
             

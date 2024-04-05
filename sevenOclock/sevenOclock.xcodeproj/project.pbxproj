@@ -28,6 +28,7 @@
 		C7AFB89D2BB3C9E00023C46F /* FoodItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB89C2BB3C9E00023C46F /* FoodItem.swift */; };
 		C7AFB89F2BB3E9A70023C46F /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB89E2BB3E9A70023C46F /* Date.swift */; };
 		C7AFB8A12BB44C350023C46F /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB8A02BB44C350023C46F /* MainView.swift */; };
+		C7AFB8A32BB52D870023C46F /* AddFoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB8A22BB52D870023C46F /* AddFoodView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		C7AFB89C2BB3C9E00023C46F /* FoodItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItem.swift; sourceTree = "<group>"; };
 		C7AFB89E2BB3E9A70023C46F /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		C7AFB8A02BB44C350023C46F /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		C7AFB8A22BB52D870023C46F /* AddFoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFoodView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +146,7 @@
 			children = (
 				C7AFB8802BB2F5D40023C46F /* MyFridgeView.swift */,
 				C7AFB8A02BB44C350023C46F /* MainView.swift */,
+				C7AFB8A22BB52D870023C46F /* AddFoodView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -240,6 +243,7 @@
 				C7272C1D2BB1757A00B1397C /* sevenOclockApp.swift in Sources */,
 				C7AFB8812BB2F5D40023C46F /* MyFridgeView.swift in Sources */,
 				C7AFB89B2BB3A9D10023C46F /* SortOption.swift in Sources */,
+				C7AFB8A32BB52D870023C46F /* AddFoodView.swift in Sources */,
 				C7AFB8852BB2F7660023C46F /* MyCapsule.swift in Sources */,
 				C7AFB8952BB320D60023C46F /* Font.swift in Sources */,
 				C7AFB87D2BB255600023C46F /* UIApplication.swift in Sources */,

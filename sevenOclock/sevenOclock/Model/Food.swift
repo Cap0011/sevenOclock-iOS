@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Food {
+struct Food: Identifiable, Hashable {
     let id: UUID
     var name: String
     var count: Int
