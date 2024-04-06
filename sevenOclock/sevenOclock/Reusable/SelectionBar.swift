@@ -21,13 +21,13 @@ struct SelectionBar: View {
         } label: {
             HStack(spacing: 10) {
                 Text(selected)
-                    .font(.suite(.medium, size: 15))
+                    .font(.suite(.medium, size: 13))
                 Image(systemName: "chevron.down")
             }
             .foregroundStyle(.grey0)
             .padding(.leading, 15)
             .padding(.trailing, 10)
-            .background(RoundedRectangle(cornerRadius: 15).stroke(lineWidth: 1.0).frame(height: 34).foregroundColor(.grey0).opacity(0.3).background(RoundedRectangle(cornerRadius: 15).foregroundStyle(.white)))
+            .background(RoundedRectangle(cornerRadius: 15).stroke(lineWidth: 1.0).frame(height: 30).foregroundColor(.grey0).opacity(0.3).background(RoundedRectangle(cornerRadius: 15).foregroundStyle(.white)))
         }
         .padding(.vertical, 8)
     }

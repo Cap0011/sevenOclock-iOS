@@ -13,7 +13,6 @@ struct MyFridgeView: View {
     @State var selectedPreservation = Preservation.fridge
     @State var selectedSortOption = SortOption.byDateDESC.rawValue
     @State var isDateTagSelected = false
-    @State var viewBySell = true
     @State var isShowingAddConfirmation = false
     
     var body: some View {
@@ -32,15 +31,12 @@ struct MyFridgeView: View {
                 
                 sortSpace
                     .padding(.horizontal, 25)
-                    .padding(.top, 23)
+                    .padding(.top, 15)
                 
-                FoodGridView(foods: [Food.dummyData, Food.dummyData1, Food.dummyData2, Food.dummyData3], backgroundColour: .blue, preservation: selectedPreservation, viewBySell: viewBySell)
+                FoodGridView(foods: [Food.dummyData, Food.dummyData1, Food.dummyData2, Food.dummyData3], backgroundColour: .blue, preservation: selectedPreservation)
                     .padding(.horizontal, 20)
-                    .padding(.top, 18)
-                
-                radioButtonGroup
-                    .padding(.horizontal, 25)
-                    .padding(.vertical, 15)
+                    .padding(.top, 10)
+                    .padding(.bottom, 15)
             }
             .confirmationDialog("Add", isPresented: $isShowingAddConfirmation) {
                 Text("영수증 촬영")
@@ -102,44 +98,19 @@ struct MyFridgeView: View {
         }
     }
     
-    var radioButtonGroup: some View {
-        HStack(spacing: 15) {
-            HStack(spacing: 4) {
-                Image(systemName: viewBySell ? "checkmark.circle.fill" : "checkmark.circle")
-                Text("유통기한으로 보기")
-            }
-            .foregroundStyle(viewBySell ? .black : .gray)
-            .onTapGesture {
-                viewBySell = true
-            }
-            
-            HStack(spacing: 4) {
-                Image(systemName: !viewBySell ? "checkmark.circle.fill" : "checkmark.circle")
-                Text("소비기한으로 보기")
-            }
-            .foregroundStyle(!viewBySell ? .black : .gray)
-            .onTapGesture {
-                viewBySell = false
-            }
-        }
-        .font(.suite(.regular, size: 14))
-    }
-    
     struct FoodGridView: View {
         let layout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
         
         let foods: [Food]
         let backgroundColour: Color
         let preservation: Preservation
-        
-        @State var viewBySell: Bool
-        
+                
         var body: some View {
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVGrid(columns: layout) {
                     ForEach(foods, id: \.id) { food in
                         VStack(spacing: 0) {
-                            FoodItem(item: food, date: viewBySell ? food.sellbyDate : food.usebyDate)
+                            FoodItem(item: food, date: food.usebyDate)
                                 .padding(.top, 10)
                                 .padding(.bottom, 15)
                             
