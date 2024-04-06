@@ -45,6 +45,16 @@ struct RecipeView: View {
                         .padding(.bottom, 30)
                 }
             }
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("레시피")
+                        .font(.suite(.semibold, size: 17))
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Image(systemName: "gearshape.fill")
+                }
+            }
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
     
