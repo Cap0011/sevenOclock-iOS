@@ -29,6 +29,7 @@ struct SelectionBar: View {
             .padding(.trailing, 10)
             .background(RoundedRectangle(cornerRadius: 15).stroke(lineWidth: 1.0).frame(height: 34).foregroundColor(.grey0).opacity(0.3).background(RoundedRectangle(cornerRadius: 15).foregroundStyle(.white)))
         }
+        .padding(.vertical, 8)
     }
 }
 

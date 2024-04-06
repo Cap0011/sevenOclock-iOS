@@ -17,8 +17,4 @@ enum SortOption: String, CaseIterable {
     static func allCasesStringArray() -> [String] {
         return SortOption.allCases.map { $0.rawValue }
     }
-    
-    static func casesStringArray() -> [String] {
-        return SortOption.allCasesStringArray().filter { $0 != "전체" }
-    }
 }

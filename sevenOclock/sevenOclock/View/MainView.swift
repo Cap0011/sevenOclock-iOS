@@ -10,20 +10,20 @@ import SwiftUI
 struct MainView: View {
     var body: some View {
         TabView {
-            Text("The First Tab")
+            Text("냉장고 분석")
                 .tabItem {
-                    Image(systemName: "1.square.fill")
-                    Text("First")
+                    Image(systemName: "chart.pie.fill")
+                    Text("냉장고 분석")
                 }
             MyFridgeView()
                 .tabItem {
                     Image(systemName: "refrigerator.fill")
                     Text("나의 냉장고")
                 }
-            Text("The Last Tab")
+            RecipeView()
                 .tabItem {
-                    Image(systemName: "3.square.fill")
-                    Text("Third")
+                    Image(systemName: "fork.knife")
+                    Text("레시피")
                 }
         }
         .font(.headline)
