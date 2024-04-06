@@ -14,14 +14,18 @@ struct RecipeView: View {
     
     @State private var recipes: [Recipe] = Recipe.dummyData
     
+    @State private var tags: [String] = ["시금치", "베이컨"]
+    
     var body: some View {
         NavigationView {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
-                    searchBar
-                        .padding(.top, 15)
-                        .padding(.horizontal, 25)
-                        .padding(.bottom, 10)
+                    NavigationLink(destination: RecipeSearchView(tags: $tags)) {
+                        searchBar
+                            .padding(.top, 15)
+                            .padding(.horizontal, 25)
+                            .padding(.bottom, 10)
+                    }
                     
                     filterSpace
                         .padding(.bottom, 10)
@@ -67,6 +71,13 @@ struct RecipeView: View {
                     .onTapGesture {
                         isDateTagSelected.toggle()
                     }
+                
+                ForEach(tags, id: \.self) { tag in
+                    IngredientCapsule(title: tag)
+                        .onTapGesture {
+                            tags = tags.filter { $0 != tag }
+                        }
+                }
             }
             .frame(height: 38)
             .padding(.horizontal, 25)

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SearchBar: View {
-    let placeholder = "검색할 식품 이름을 입력하세요"
+    var placeholder = "검색할 식품 이름을 입력하세요"
     
     @FocusState private var isFocused: Bool
     
