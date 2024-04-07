@@ -36,6 +36,7 @@
 		C7AFB8B12BC1268E0023C46F /* IngredientCapsule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB8B02BC1268E0023C46F /* IngredientCapsule.swift */; };
 		C7AFB8B32BC132270023C46F /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB8B22BC132270023C46F /* ChartView.swift */; };
 		C7AFB8B52BC28AAB0023C46F /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB8B42BC28AAB0023C46F /* SettingView.swift */; };
+		C7AFB8B82BC298EE0023C46F /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB8B72BC298EE0023C46F /* WebView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +71,7 @@
 		C7AFB8B02BC1268E0023C46F /* IngredientCapsule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientCapsule.swift; sourceTree = "<group>"; };
 		C7AFB8B22BC132270023C46F /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		C7AFB8B42BC28AAB0023C46F /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		C7AFB8B72BC298EE0023C46F /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				C7272C1C2BB1757A00B1397C /* sevenOclockApp.swift */,
 				C7AFB87F2BB2F47B0023C46F /* View */,
 				C7AFB8782BB1C7BE0023C46F /* Model */,
+				C7AFB8B62BC298820023C46F /* Helper */,
 				C7AFB87B2BB1C9A20023C46F /* Reusable */,
 				C7AFB87E2BB2F45E0023C46F /* Extension */,
 				C7AFB8882BB31FB10023C46F /* Fonts */,
@@ -184,6 +187,14 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		C7AFB8B62BC298820023C46F /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				C7AFB8B72BC298EE0023C46F /* WebView.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -260,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7AFB87A2BB1C9970023C46F /* SearchBar.swift in Sources */,
+				C7AFB8B82BC298EE0023C46F /* WebView.swift in Sources */,
 				C7AFB8A12BB44C350023C46F /* MainView.swift in Sources */,
 				C7272C1D2BB1757A00B1397C /* sevenOclockApp.swift in Sources */,
 				C7AFB8812BB2F5D40023C46F /* MyFridgeView.swift in Sources */,

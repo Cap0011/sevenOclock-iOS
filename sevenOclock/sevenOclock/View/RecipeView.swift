@@ -11,10 +11,14 @@ struct RecipeView: View {
     @State private var searchTitle = ""
     @State private var isDateTagSelected = false
     @State private var selectedSortOption = "냉장고 일치 순"
+    @State private var isShowingWebView = false
+    @State private var selectedURL = ""
     
     @State private var recipes: [Recipe] = Recipe.dummyData
     
     @State private var tags: [String] = ["시금치", "베이컨"]
+    
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         NavigationView {
@@ -45,6 +49,16 @@ struct RecipeView: View {
                         .padding(.bottom, 30)
                 }
             }
+            .sheet(isPresented: $isShowingWebView) {
+                WebView(url: selectedURL)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button("취소") {
+                                dismiss()
+                            }
+                        }
+                    }
+            }
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text("레시피")
@@ -57,6 +71,9 @@ struct RecipeView: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
+            .onChange(of: selectedURL) { _ in
+                print(selectedURL)
+            }
         }
     }
     
@@ -98,8 +115,14 @@ struct RecipeView: View {
     
     var recipeList: some View {
         VStack(spacing: 15) {
-            ForEach(recipes, id: \.id) {
-                RecipeCard(recipe: $0)
+            ForEach(recipes, id: \.id) { recipe in
+                RecipeCard(recipe: recipe)
+                    .onTapGesture {
+                        Task {
+                            selectedURL = recipe.link
+                            isShowingWebView.toggle()
+                        }
+                    }
             }
         }
         .padding(.horizontal, 20)
