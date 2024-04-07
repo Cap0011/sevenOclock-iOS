@@ -10,7 +10,7 @@ import SwiftUI
 struct MainView: View {
     var body: some View {
         TabView {
-            Text("냉장고 분석")
+            ChartView()
                 .tabItem {
                     Image(systemName: "chart.pie.fill")
                     Text("냉장고 분석")
