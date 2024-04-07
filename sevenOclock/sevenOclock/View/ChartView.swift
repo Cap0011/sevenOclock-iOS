@@ -17,16 +17,31 @@ struct ChartView: View {
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 0) {
-                header
-                    .padding(.top, 25)
-                
-                chart
-                    .padding(.top, 30)
-                
-                Spacer()
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 0) {
+                    Divider()
+                        .padding(.horizontal, -20)
+                    
+                    header
+                        .padding(.top, 20)
+                    
+                    chart
+                        .padding(.top, 30)
+                    
+                    Spacer()
+                }
+                .padding(.horizontal, 20)
             }
-            .padding(.horizontal, 20)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("냉장고 분석")
+                        .font(.suite(.semibold, size: 17))
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Image(systemName: "gearshape.fill")
+                }
+            }
+            .navigationBarTitleDisplayMode(.inline)
         }
         .onAppear {
             categorySlices = [(2, .red), (1, .orange), (5, .yellow), (3, .green), (6, .blue), (4, .indigo)]
