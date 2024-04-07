@@ -8,19 +8,59 @@
 import SwiftUI
 
 struct AddFoodView: View {
+    @Environment(\.dismiss) private var dismiss
+    
     @State var foodList: [Food] = []
     
     var body: some View {
-        ForEach($foodList, id: \.self) { $food in
-            FoodInputCard(food: $food)
-                .font(.suite(.bold, size: 15))
-                .padding(.horizontal, 20)
-                .padding(.bottom, 20)
+        NavigationView {
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 0) {
+                    ForEach($foodList, id: \.self) { $food in
+                        FoodInputCard(food: $food, list: $foodList)
+                            .font(.suite(.bold, size: 15))
+                            .padding(.horizontal, 20)
+                            .padding(.bottom, 20)
+                    }
+                }
+                .padding(.vertical, 25)
+            }
+            .onAppear {
+                // TODO: Replace dummy data
+                foodList.append(Food.dummyData2)
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    HStack {
+                        Image(systemName: "chevron.backward")
+                        Text("취소")
+                    }
+                    .font(.suite(.regular, size: 16))
+                    .onTapGesture {
+                        dismiss()
+                    }
+                }
+                ToolbarItem(placement: .principal) {
+                    Text("식품 입력")
+                        .font(.suite(.semibold, size: 17))
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Text("완료")
+                        .font(.suite(.bold, size: 16))
+                        .onTapGesture {
+                            // TODO: Save input information
+                            dismiss()
+                        }
+                }
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden()
         }
     }
     
     struct FoodInputCard: View {
         @Binding var food: Food
+        @Binding var list: [Food]
         @State var category = "육류"
         @State var preservation = "냉장"
         
@@ -34,6 +74,7 @@ struct AddFoodView: View {
                         .padding(.bottom, 5)
                         .onTapGesture {
                             // TODO: Remove this element
+                            list = list.filter { $0.id != food.id }
                         }
                 }
                 

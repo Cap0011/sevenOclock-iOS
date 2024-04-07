@@ -16,7 +16,7 @@ struct RecipeView: View {
     
     @State private var recipes: [Recipe] = Recipe.dummyData
     
-    @State private var tags: [String] = ["시금치", "베이컨"]
+    @State private var tags: [String] = []
     
     @Environment(\.dismiss) private var dismiss
     

@@ -14,6 +14,7 @@ struct MyFridgeView: View {
     @State var selectedSortOption = SortOption.byDateDESC.rawValue
     @State var isDateTagSelected = false
     @State var isShowingAddConfirmation = false
+    @State var isShowingAddSheet = false
     
     var body: some View {
         NavigationView {
@@ -39,7 +40,21 @@ struct MyFridgeView: View {
                     .padding(.bottom, 15)
             }
             .confirmationDialog("Add", isPresented: $isShowingAddConfirmation) {
-                Text("영수증 촬영")
+                Button("영수증 촬영") {
+                    // TODO: 영수증 촬영
+                }
+                Button("바코드 인식") {
+                    // TODO: 바코드 인식
+                }
+                Button("직접 입력") {
+                    isShowingAddSheet.toggle()
+                }
+                Button("취소", role: .cancel) { }
+            } message: {
+                Text("어떻게 냉장고에 추가하실 건가요?")
+            }
+            .sheet(isPresented: $isShowingAddSheet) {
+                AddFoodView()
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
