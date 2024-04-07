@@ -82,21 +82,24 @@ struct RecipeView: View {
             RoundedRectangle(cornerRadius: 17)
                 .stroke(lineWidth: 1.5)
                 .frame(height: 38)
+                .foregroundStyle(.grey0.opacity(0.3))
+            
             HStack {
                 Image(systemName: "magnifyingglass")
                     .padding(.leading, 10)
+                    .opacity(0.8)
                 
                 Text("검색할 재료, 레시피를 입력하세요")
             }
         }
-        .foregroundStyle(.gray)
+        .foregroundStyle(.grey0.opacity(0.8))
         .font(.suite(.regular, size: 15))
     }
     
     var filterSpace: some View {
         ScrollView(.horizontal) {
             HStack(spacing: 8) {
-                MyCapsule(isSelected: isDateTagSelected, textColour: isDateTagSelected ? .white : .red, colour: .red, text: "기한 임박 재료 포함")
+                MyCapsule(isSelected: isDateTagSelected, textColour: isDateTagSelected ? .white : .tagRed, colour: .tagRed, text: "기한 임박 재료 포함")
                     .onTapGesture {
                         isDateTagSelected.toggle()
                     }
@@ -132,7 +135,7 @@ struct RecipeView: View {
         let recipe: Recipe
         
         var body: some View {
-            HStack(spacing: 10) {
+            HStack(alignment: .bottom, spacing: 10) {
                 ZStack(alignment: .topTrailing) {
                     if let url = URL(string: recipe.imageURL) {
                         AsyncImage(url: url) { image in
@@ -186,6 +189,7 @@ struct RecipeView: View {
                     }
                     .foregroundStyle(.recipeOrange)
                     .padding(.top, 10)
+                    .padding(.bottom, 5)
                 }
                 
                 Spacer()

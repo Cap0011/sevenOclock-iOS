@@ -25,7 +25,7 @@ struct MyCapsule: View {
                 Text(text)
                     .foregroundStyle(textColour)
                     .padding(.horizontal, 18)
-                    .background(RoundedRectangle(cornerRadius: 17).stroke(lineWidth: 1.5).frame(height: 30).foregroundStyle(colour))
+                    .background(RoundedRectangle(cornerRadius: 17).stroke(lineWidth: 1.0).frame(height: 30).foregroundStyle(colour))
             }
         }
         .font(.suite(.medium, size: 13))

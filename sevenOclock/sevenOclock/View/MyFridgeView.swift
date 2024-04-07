@@ -58,7 +58,7 @@ struct MyFridgeView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Image("add")
+                    Image("plusFridge")
                         .onTapGesture {
                             isShowingAddConfirmation = true
                         }
@@ -81,7 +81,7 @@ struct MyFridgeView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 8) {
                 ForEach(Category.allCases, id: \.self) { category in
-                    MyCapsule(isSelected: isThisSelected(category: category), textColour: isThisSelected(category: category) ? .white : .gray, colour: isThisSelected(category: category) ? .gray : .gray, text: category.rawValue)
+                    MyCapsule(isSelected: isThisSelected(category: category), textColour: isThisSelected(category: category) ? .white : .grey0, colour: isThisSelected(category: category) ? .grey0 : .grey0.opacity(0.6), text: category.rawValue)
                         .onTapGesture {
                             selectedCategory = category
                         }
@@ -108,7 +108,7 @@ struct MyFridgeView: View {
             
             Spacer()
             
-            MyCapsule(isSelected: isDateTagSelected, textColour: isDateTagSelected ? .white : .red, colour: .red, text: "기한 임박")
+            MyCapsule(isSelected: isDateTagSelected, textColour: isDateTagSelected ? .white : .tagRed, colour: .tagRed, text: "기한 임박")
                 .onTapGesture {
                     isDateTagSelected.toggle()
                 }

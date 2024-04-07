@@ -31,14 +31,11 @@ struct AddFoodView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    HStack {
-                        Image(systemName: "chevron.backward")
-                        Text("취소")
-                    }
-                    .font(.suite(.regular, size: 16))
-                    .onTapGesture {
-                        dismiss()
-                    }
+                    Text("취소")
+                        .font(.suite(.regular, size: 16))
+                        .onTapGesture {
+                            dismiss()
+                        }
                 }
                 ToolbarItem(placement: .principal) {
                     Text("식품 입력")
@@ -104,13 +101,20 @@ struct AddFoodView: View {
                     Text("분류")
                     SelectionBar(selections: Category.casesStringArray(), selected: $category)
                 }
-                .padding(.vertical, 10)
+                
+                myDivider
+                    .padding(.vertical, 5)
+                    .padding(.horizontal, -17)
                 
                 HStack(spacing: 12) {
                     Text("소비기한")
                     DatePicker("Use By Date", selection: $food.usebyDate, displayedComponents: .date)
                         .labelsHidden()
                 }
+                
+                myDivider
+                    .padding(.vertical, 5)
+                    .padding(.horizontal, -17)
                 
                 HStack(spacing: 12) {
                     Text("저장 방법")
@@ -123,6 +127,12 @@ struct AddFoodView: View {
             .padding(.top, 15)
             .padding(.bottom, 20)
             .background(RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/).foregroundStyle(.lightBlue))
+        }
+        
+        var myDivider: some View {
+            Rectangle()
+                .frame(height: 1)
+                .foregroundStyle(.white)
         }
     }
     

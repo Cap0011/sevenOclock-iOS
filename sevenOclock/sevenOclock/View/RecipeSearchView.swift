@@ -50,14 +50,11 @@ struct RecipeSearchView: View {
         }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                HStack {
-                    Image(systemName: "chevron.backward")
-                    Text("취소")
-                }
-                .font(.suite(.regular, size: 16))
-                .onTapGesture {
-                    dismiss()
-                }
+                Text("취소")
+                    .font(.suite(.regular, size: 16))
+                    .onTapGesture {
+                        dismiss()
+                    }
             }
             ToolbarItem(placement: .principal) {
                 Text("레시피")

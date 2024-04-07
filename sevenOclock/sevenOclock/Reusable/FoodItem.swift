@@ -52,7 +52,7 @@ struct FoodItem: View {
                 .foregroundStyle(.white)
                 .padding(.vertical, 5)
                 .padding(.horizontal, 8)
-                .background(RoundedRectangle(cornerRadius: 10.0).frame(height: 20).foregroundStyle(Int(date.daysLeft())! > 3 ? .gray : .red))
+                .background(RoundedRectangle(cornerRadius: 10.0).frame(height: 20).foregroundStyle(Int(date.daysLeft())! > 3 ? .gray : .tagRed))
                 .opacity(0.8)
         }
     }

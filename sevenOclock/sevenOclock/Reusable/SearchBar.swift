@@ -20,9 +20,12 @@ struct SearchBar: View {
             RoundedRectangle(cornerRadius: 17)
                 .stroke(lineWidth: 1.5)
                 .frame(height: 38)
+                .foregroundStyle(.grey0.opacity(0.3))
+            
             HStack {
                 Image(systemName: "magnifyingglass")
                     .padding(.leading, 10)
+                    .opacity(0.8)
                 
                 ZStack(alignment: .leading) {
                     if searchTitle.isEmpty  {
@@ -59,7 +62,7 @@ struct SearchBar: View {
                 }
             }
         }
-        .foregroundStyle(.gray)
+        .foregroundStyle(.grey0.opacity(0.8))
         .font(.suite(.regular, size: 15))
     }
 }

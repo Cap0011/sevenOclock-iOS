@@ -22,7 +22,7 @@ enum Preservation: String, CaseIterable {
         case .room:
             return "Room"
         case .all:
-            return "All"
+            return "Everything"
         }
     }
     
