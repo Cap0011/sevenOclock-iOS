@@ -51,7 +51,9 @@ struct RecipeView: View {
                         .font(.suite(.semibold, size: 17))
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Image(systemName: "gearshape.fill")
+                    NavigationLink(destination: SettingView()) {
+                        Image(systemName: "gearshape.fill")
+                    }
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
