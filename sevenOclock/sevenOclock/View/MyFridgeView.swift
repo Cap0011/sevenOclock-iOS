@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct MyFridgeView: View {
+    @Environment(\.managedObjectContext) var managedObjectContext
+    @FetchRequest(entity: Food.entity(), sortDescriptors: []) var foods: FetchedResults<Food>
+    
     @State var searchTitle = ""
     @State var selectedCategory = Category.all
     @State var selectedPreservation = Preservation.fridge
@@ -34,7 +37,7 @@ struct MyFridgeView: View {
                     .padding(.horizontal, 25)
                     .padding(.top, 15)
                 
-                FoodGridView(foods: [Food.dummyData, Food.dummyData1, Food.dummyData2, Food.dummyData3], backgroundColour: .blue, preservation: selectedPreservation)
+                FoodGridView(foods: foods.map { $0 }, backgroundColour: .blue, preservation: selectedPreservation)
                     .padding(.horizontal, 20)
                     .padding(.top, 10)
                     .padding(.bottom, 15)
@@ -127,7 +130,7 @@ struct MyFridgeView: View {
                 LazyVGrid(columns: layout) {
                     ForEach(foods, id: \.id) { food in
                         VStack(spacing: 0) {
-                            FoodItem(item: food, date: food.usebyDate)
+                            FoodItem(item: food, date: food.usebyDate ?? Date())
                                 .padding(.top, 10)
                                 .padding(.bottom, 15)
                             

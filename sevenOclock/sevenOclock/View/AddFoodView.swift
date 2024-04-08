@@ -9,8 +9,9 @@ import SwiftUI
 
 struct AddFoodView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.managedObjectContext) var managedObjectContext
     
-    @State var foodList: [Food] = []
+    @State var foodList: [TemporaryFood] = []
     
     var body: some View {
         NavigationView {
@@ -27,7 +28,9 @@ struct AddFoodView: View {
             }
             .onAppear {
                 // TODO: Replace dummy data
-                foodList.append(Food.dummyData2)
+                if foodList.isEmpty {
+                    foodList.append(TemporaryFood(id: UUID()))
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -46,6 +49,9 @@ struct AddFoodView: View {
                         .font(.suite(.bold, size: 16))
                         .onTapGesture {
                             // TODO: Save input information
+                            for food in foodList {
+                                addFood(data: food)
+                            }
                             dismiss()
                         }
                 }
@@ -56,9 +62,16 @@ struct AddFoodView: View {
     }
     
     struct FoodInputCard: View {
-        @Binding var food: Food
-        @Binding var list: [Food]
+        @Binding var food: TemporaryFood
+        @Binding var list: [TemporaryFood]
+        
+        @State var isTypingFinished = true
+        
+        @State var name = ""
+        @State var count = 1
         @State var category = "육류"
+        
+        @State var date = Date()
         @State var preservation = "냉장"
         
         var body: some View {
@@ -77,13 +90,13 @@ struct AddFoodView: View {
                 
                 HStack(spacing: 12) {
                     Text("이름")
-                    MyTextField(text: $food.name)
+                    MyTextField(text: $name, isFinished: $isTypingFinished)
                 }
                 
                 HStack(spacing: 12) {
                     Text("수량")
-                    Stepper(value: $food.count, in: 1...99) {
-                        Text("\(food.count)")
+                    Stepper(value: $count, in: 1...99) {
+                        Text("\(count)")
                             .font(.suite(.regular, size: 15))
                             .padding(.horizontal, 15)
                             .background(ZStack {RoundedRectangle(cornerRadius: 17)
@@ -108,7 +121,7 @@ struct AddFoodView: View {
                 
                 HStack(spacing: 12) {
                     Text("소비기한")
-                    DatePicker("Use By Date", selection: $food.usebyDate, displayedComponents: .date)
+                    DatePicker("Use By Date", selection: $date, displayedComponents: .date)
                         .labelsHidden()
                 }
                 
@@ -127,6 +140,30 @@ struct AddFoodView: View {
             .padding(.top, 15)
             .padding(.bottom, 20)
             .background(RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/).foregroundStyle(.lightBlue))
+            .onAppear {
+                name = food.name
+                count = food.count
+                category = food.category?.rawValue ?? "육류"
+                date = food.usebyDate
+                preservation = food.preservation?.rawValue ?? "냉장"
+            }
+            .onChange(of: isTypingFinished) { _ in
+                if isTypingFinished {
+                    food.name = name
+                }
+            }
+            .onChange(of: count) { _ in
+                food.count = count
+            }
+            .onChange(of: category) { _ in
+                food.category = Category.fromRawValue(rawValue: category)
+            }
+            .onChange(of: date) { _ in
+                food.usebyDate = date
+            }
+            .onChange(of: preservation) { _ in
+                food.preservation = Preservation.fromRawValue(rawValue: preservation)
+            }
         }
         
         var myDivider: some View {
@@ -140,7 +177,7 @@ struct AddFoodView: View {
         @Binding var text: String
         
         @FocusState private var isFocused: Bool
-        @State var isSearching = false
+        @Binding var isFinished: Bool
         
         var body: some View {
             ZStack(alignment: .leading) {
@@ -158,15 +195,9 @@ struct AddFoodView: View {
                         TextField("", text: $text) { startedEditing in
                             if startedEditing {
                                 isFocused = true
-                                withAnimation {
-                                    isSearching = true
-                                }
                             }
                         } onCommit: {
                             isFocused = false
-                            withAnimation {
-                                isSearching = false
-                            }
                         }
                         .focused($isFocused)
                         .foregroundStyle(.grey0)
@@ -179,7 +210,6 @@ struct AddFoodView: View {
                                 text = ""
                                 isFocused = false
                                 withAnimation {
-                                    isSearching = false
                                     UIApplication.shared.dismissKeyboard()
                                 }
                             }
@@ -189,10 +219,30 @@ struct AddFoodView: View {
             }
             .foregroundStyle(.grey0)
             .font(.suite(.regular, size: 15))
+            .onChange(of: isFocused) { _ in
+                isFinished = !isFocused
+            }
         }
     }
-}
-
-#Preview {
-    AddFoodView(foodList: [Food.dummyData, Food.dummyData1])
+    
+    private func saveContext() {
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print("Error saving managed object context: \(error)")
+        }
+    }
+    
+    private func addFood(data: TemporaryFood) {
+        let newFood = Food(context: managedObjectContext)
+        
+        newFood.id = data.id
+        newFood.name = data.name
+        newFood.count = Int64(data.count)
+        newFood.category = data.category?.rawValue
+        newFood.usebyDate = data.usebyDate
+        newFood.preservation = data.preservation?.rawValue
+        
+        saveContext()
+    }
 }

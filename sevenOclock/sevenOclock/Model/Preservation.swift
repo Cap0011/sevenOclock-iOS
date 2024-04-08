@@ -33,4 +33,8 @@ enum Preservation: String, CaseIterable {
     static func casesStringArray() -> [String] {
         return Preservation.allCasesStringArray().filter { $0 != "전체" }
     }
+    
+    static func fromRawValue(rawValue: String) -> Preservation? {
+        return Preservation(rawValue: rawValue)
+    }
 }

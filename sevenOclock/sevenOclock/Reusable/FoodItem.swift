@@ -20,7 +20,7 @@ struct FoodItem: View {
                     .frame(width: 70)
                     .padding(.bottom, 10)
                 
-                Text("\(item.name) \(item.count)")
+                Text("\(item.name ?? "") \(item.count)")
                     .font(.suite(.medium, size: 13))
                     .foregroundStyle(.black)
                     .padding(.bottom, 3)
@@ -56,8 +56,4 @@ struct FoodItem: View {
                 .opacity(0.8)
         }
     }
-}
-
-#Preview {
-    FoodItem(item: Food.dummyData, date: Date())
 }
