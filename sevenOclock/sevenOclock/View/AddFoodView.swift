@@ -18,7 +18,7 @@ struct AddFoodView: View {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
                     ForEach($foodList, id: \.self) { $food in
-                        FoodInputCard(food: $food, list: $foodList)
+                        FoodInputCard(food: food, list: $foodList)
                             .font(.suite(.bold, size: 15))
                             .padding(.horizontal, 20)
                             .padding(.bottom, 20)
@@ -62,18 +62,11 @@ struct AddFoodView: View {
     }
     
     struct FoodInputCard: View {
-        @Binding var food: TemporaryFood
+        @StateObject var food: TemporaryFood
         @Binding var list: [TemporaryFood]
         
         @State var isTypingFinished = true
-        
-        @State var name = ""
-        @State var count = 1
-        @State var category = "육류"
-        
-        @State var date = Date()
-        @State var preservation = "냉장"
-        
+
         var body: some View {
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
@@ -90,13 +83,13 @@ struct AddFoodView: View {
                 
                 HStack(spacing: 12) {
                     Text("이름")
-                    MyTextField(text: $name, isFinished: $isTypingFinished)
+                    MyTextField(text: $food.name, isFinished: $isTypingFinished)
                 }
                 
                 HStack(spacing: 12) {
                     Text("수량")
-                    Stepper(value: $count, in: 1...99) {
-                        Text("\(count)")
+                    Stepper(value: $food.count, in: 1...99) {
+                        Text("\(food.count)")
                             .font(.suite(.regular, size: 15))
                             .padding(.horizontal, 15)
                             .background(ZStack {RoundedRectangle(cornerRadius: 17)
@@ -112,7 +105,8 @@ struct AddFoodView: View {
                 
                 HStack(spacing: 12) {
                     Text("분류")
-                    SelectionBar(selections: Category.casesStringArray(), selected: $category)
+                    SelectionBar(selections: Category.casesStringArray(), selected: $food.category)
+                    SelectionBar(selections: Category.fromRawValue(rawValue: food.category)!.getSubcategories(), selected: $food.subcategory)
                 }
                 
                 myDivider
@@ -121,7 +115,7 @@ struct AddFoodView: View {
                 
                 HStack(spacing: 12) {
                     Text("소비기한")
-                    DatePicker("Use By Date", selection: $date, displayedComponents: .date)
+                    DatePicker("Use By Date", selection: $food.usebyDate, displayedComponents: .date)
                         .labelsHidden()
                 }
                 
@@ -131,7 +125,7 @@ struct AddFoodView: View {
                 
                 HStack(spacing: 12) {
                     Text("저장 방법")
-                    SelectionBar(selections: Preservation.casesStringArray(), selected: $preservation)
+                    SelectionBar(selections: Preservation.casesStringArray(), selected: $food.preservation)
                 }
                 .padding(.top, 10)
                 .padding(.bottom, 10)
@@ -140,29 +134,8 @@ struct AddFoodView: View {
             .padding(.top, 15)
             .padding(.bottom, 20)
             .background(RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/).foregroundStyle(.lightBlue))
-            .onAppear {
-                name = food.name
-                count = food.count
-                category = food.category?.rawValue ?? "육류"
-                date = food.usebyDate
-                preservation = food.preservation?.rawValue ?? "냉장"
-            }
-            .onChange(of: isTypingFinished) { _ in
-                if isTypingFinished {
-                    food.name = name
-                }
-            }
-            .onChange(of: count) { _ in
-                food.count = count
-            }
-            .onChange(of: category) { _ in
-                food.category = Category.fromRawValue(rawValue: category)
-            }
-            .onChange(of: date) { _ in
-                food.usebyDate = date
-            }
-            .onChange(of: preservation) { _ in
-                food.preservation = Preservation.fromRawValue(rawValue: preservation)
+            .onChange(of: food.category) { category in
+                food.subcategory = Category.fromRawValue(rawValue: category)?.getSubcategories().first ?? ""
             }
         }
         
@@ -189,6 +162,12 @@ struct AddFoodView: View {
                     .stroke(lineWidth: 1.5)
                     .frame(height: 34)
                     .foregroundStyle(.grey1)
+                
+                if text.isEmpty {
+                    Text("식품 이름")
+                        .padding(.leading, 15)
+                        .opacity(0.5)
+                }
                 
                 HStack {
                     ZStack(alignment: .leading) {
@@ -239,9 +218,10 @@ struct AddFoodView: View {
         newFood.id = data.id
         newFood.name = data.name
         newFood.count = Int64(data.count)
-        newFood.category = data.category?.rawValue
+        newFood.category = data.category
         newFood.usebyDate = data.usebyDate
-        newFood.preservation = data.preservation?.rawValue
+        newFood.preservation = data.preservation
+        newFood.enrollDate = Date()
         
         saveContext()
     }

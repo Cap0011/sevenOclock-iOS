@@ -14,7 +14,7 @@ struct FoodItem: View {
     var body: some View {
         ZStack(alignment: .topTrailing) {
             VStack(spacing: 0) {
-                Image("Sample")
+                Image(item.category ?? "기타")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 70)

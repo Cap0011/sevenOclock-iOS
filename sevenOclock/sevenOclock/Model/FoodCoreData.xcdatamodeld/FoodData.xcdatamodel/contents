@@ -7,6 +7,7 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="preservation" optional="YES" attributeType="String"/>
+        <attribute name="subcategory" optional="YES" attributeType="String"/>
         <attribute name="usebyDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
 </model>
