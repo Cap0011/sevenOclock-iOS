@@ -127,8 +127,6 @@ struct AddFoodView: View {
                     Text("저장 방법")
                     SelectionBar(selections: Preservation.casesStringArray(), selected: $food.preservation)
                 }
-                .padding(.top, 10)
-                .padding(.bottom, 10)
             }
             .padding(.horizontal, 20)
             .padding(.top, 15)
