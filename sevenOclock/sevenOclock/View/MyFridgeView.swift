@@ -9,13 +9,40 @@ import SwiftUI
 
 struct MyFridgeView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
-    @FetchRequest(entity: Food.entity(), sortDescriptors: []) var foods: FetchedResults<Food>
+    @FetchRequest(entity: Food.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Food.usebyDate, ascending: true)]) var foods: FetchedResults<Food>
+    
+    var filteredFoods: [Food] {
+        var result = Array(foods)
+        
+        if !searchTitle.isEmpty {
+            result = foods.filter { $0.name!.localizedCaseInsensitiveContains(searchTitle) }
+        }
+        
+        if selectedCategory != Category.all {
+            result = result.filter { $0.category == selectedCategory.rawValue }
+        }
+        
+        if selectedPreservation != Preservation.all {
+            result = result.filter { $0.preservation == selectedPreservation.rawValue }
+        }
+        
+        if isDateTagSelected {
+            result = result.filter { ($0.usebyDate?.daysLeft())! <= 3 }
+        }
+        
+        result.sort(by: { food1, food2 in
+            return SortOption.fromRawValue(rawValue: selectedSortOption)!.sortDescriptor().compare(food1, to: food2) == .orderedAscending
+        })
+        
+        return result
+    }
     
     @State var searchTitle = ""
     @State var selectedCategory = Category.all
     @State var selectedPreservation = Preservation.fridge
     @State var selectedSortOption = SortOption.byDateDESC.rawValue
     @State var isDateTagSelected = false
+    
     @State var isShowingAddConfirmation = false
     @State var isShowingAddSheet = false
     
@@ -37,7 +64,7 @@ struct MyFridgeView: View {
                     .padding(.horizontal, 25)
                     .padding(.top, 15)
                 
-                FoodGridView(foods: foods.map { $0 }, backgroundColour: .blue, preservation: selectedPreservation)
+                FoodGridView(foods: filteredFoods, backgroundColour: .blue, preservation: selectedPreservation)
                     .padding(.horizontal, 20)
                     .padding(.top, 10)
                     .padding(.bottom, 15)
@@ -144,6 +171,7 @@ struct MyFridgeView: View {
                     Spacer()
                 }
                 .padding(.top, 5)
+                .padding(.bottom, 15)
                 .padding(.horizontal, 15)
                 
             }
