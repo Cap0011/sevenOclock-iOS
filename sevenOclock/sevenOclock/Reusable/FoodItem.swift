@@ -57,7 +57,7 @@ struct FoodItem: View {
         }
         
         private func properColour() -> Color {
-            if date.daysLeft() > 7 {
+            if date.daysLeft() >= 7 {
                 return .green
             } else if date.daysLeft() <= 3 {
                 return .red
