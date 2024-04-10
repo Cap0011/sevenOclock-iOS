@@ -17,11 +17,11 @@ extension Date {
     }
     
     // MARK: "일" 단위 까지만 비교하여 날짜 간격 계산
-    func daysLeft(from start: Date = Date()) -> String {
+    func daysLeft(from start: Date = Date()) -> Int {
         let timeInterval = Int(self.timeIntervalSince1970 / 86400)
         let startTimeInterval = Int(start.timeIntervalSince1970 / 86400)
         
-        return String(timeInterval - startTimeInterval)
+        return timeInterval - startTimeInterval
     }
     
     // MARK: 캘린더의 컴포넌트를 가져오는 extension(eg. Date().get(.month) -> 오늘 날짜에 해당하는 월 반환)
