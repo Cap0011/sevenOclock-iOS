@@ -17,8 +17,8 @@ struct FoodItem: View {
                 Image(item.category ?? "기타")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 70)
-                    .padding(.bottom, 10)
+                    .frame(width: 70, height: 70)
+                    .padding(.top, 10)
                 
                 Text("\(item.name ?? "") \(item.count)")
                     .font(.suite(.medium, size: 13))
