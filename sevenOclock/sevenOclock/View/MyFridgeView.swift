@@ -173,7 +173,6 @@ struct MyFridgeView: View {
                 .padding(.top, 5)
                 .padding(.bottom, 15)
                 .padding(.horizontal, 15)
-                
             }
             .background(Image(preservation.imageName()).resizable().scaledToFill().allowsHitTesting(false))
             .clipShape(RoundedRectangle(cornerRadius: 10))

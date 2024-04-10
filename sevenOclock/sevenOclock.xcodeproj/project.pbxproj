@@ -39,6 +39,7 @@
 		C7AFB8BB2BC2D9070023C46F /* FoodCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB8B92BC2D9070023C46F /* FoodCoreData.xcdatamodeld */; };
 		C7AFB8BD2BC2E19F0023C46F /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB8BC2BC2E19E0023C46F /* PersistenceController.swift */; };
 		C7AFB8BF2BC3CCEC0023C46F /* TemporaryFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB8BE2BC3CCEC0023C46F /* TemporaryFood.swift */; };
+		C7FBC2182BC6E1EC0050F9A3 /* FoodListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FBC2172BC6E1EC0050F9A3 /* FoodListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +77,7 @@
 		C7AFB8BA2BC2D9070023C46F /* FoodData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FoodData.xcdatamodel; sourceTree = "<group>"; };
 		C7AFB8BC2BC2E19E0023C46F /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		C7AFB8BE2BC3CCEC0023C46F /* TemporaryFood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryFood.swift; sourceTree = "<group>"; };
+		C7FBC2172BC6E1EC0050F9A3 /* FoodListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +178,7 @@
 				C7AFB8AE2BC0F32D0023C46F /* RecipeSearchView.swift */,
 				C7AFB8B22BC132270023C46F /* ChartView.swift */,
 				C7AFB8B42BC28AAB0023C46F /* SettingView.swift */,
+				C7FBC2172BC6E1EC0050F9A3 /* FoodListView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 				C7AFB8B32BC132270023C46F /* ChartView.swift in Sources */,
 				C7AFB8A92BBF85CD0023C46F /* RecipeView.swift in Sources */,
 				C7AFB8AD2BC04F8D0023C46F /* RecipeSortOption.swift in Sources */,
+				C7FBC2182BC6E1EC0050F9A3 /* FoodListView.swift in Sources */,
 				C7AFB8992BB3A6F50023C46F /* SelectionBar.swift in Sources */,
 				C7AFB8B52BC28AAB0023C46F /* SettingView.swift in Sources */,
 				C7AFB8BD2BC2E19F0023C46F /* PersistenceController.swift in Sources */,

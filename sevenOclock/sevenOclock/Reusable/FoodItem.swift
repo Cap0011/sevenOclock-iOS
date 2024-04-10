@@ -21,10 +21,15 @@ struct FoodItem: View {
                     .padding(.top, 10)
                     .padding(.bottom, 3)
                 
-                Text("\(item.name ?? "") \(item.count)")
-                    .font(.suite(.medium, size: 13))
-                    .foregroundStyle(.black)
-                    .padding(.bottom, 3)
+                HStack(spacing: 0) {
+                    Text("\(item.name ?? "")")
+                        .lineLimit(1)
+                    
+                    Text(" \(item.count)")
+                }
+                .font(.suite(.medium, size: 13))
+                .foregroundStyle(.black)
+                .padding(.bottom, 3)
                 
                 HStack(spacing: 0) {
                     Text(date.formattedString(format: "YYYY.MM.dd"))

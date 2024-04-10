@@ -217,6 +217,7 @@ struct AddFoodView: View {
         newFood.name = data.name
         newFood.count = Int64(data.count)
         newFood.category = data.category
+        newFood.subcategory = data.subcategory
         newFood.usebyDate = data.usebyDate
         newFood.preservation = data.preservation
         newFood.enrollDate = Date()

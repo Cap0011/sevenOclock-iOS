@@ -17,6 +17,9 @@ struct ChartView: View {
     
     @State private var currentSlices: [(String, Double, Color)] = []
     
+    @State var isShowingSheet = false
+    @State var selectedList = [Food]()
+    
     let colours: [Color] = [.red, .orange, .yellow, .green, .blue, .indigo, .purple, .black.opacity(0.15), .black.opacity(0.3), .black.opacity(0.45), .black.opacity(0.6), .black.opacity(0.75), .black.opacity(0.9), .black]
     
     var body: some View {
@@ -35,6 +38,9 @@ struct ChartView: View {
                     Spacer()
                 }
                 .padding(.horizontal, 20)
+            }
+            .sheet(isPresented: $isShowingSheet) {
+                FoodListView(foods: $selectedList)
             }
             .toolbar {
                 ToolbarItem(placement: .principal) {
@@ -63,37 +69,6 @@ struct ChartView: View {
             } else {
                 currentSlices = dateSlices
             }
-        }
-    }
-    
-    private func getCategorySlices() {
-        var colourIndex = 0
-        categorySlices = []
-        
-        for category in Category.casesStringArray() {
-            let count = foods.filter { $0.category == category }.count
-            if count > 0 {
-                categorySlices.append((category, Double(count), colours[colourIndex]))
-                colourIndex += 1;
-            }
-        }
-    }
-    
-    private func getDateSlices() {
-        dateSlices = []
-        
-        let redArray = foods.filter { ($0.usebyDate?.daysLeft())! <= 3 }
-        let orangeArray = foods.filter { ($0.usebyDate?.daysLeft())! <= 7 }
-        let greenArray = foods.filter { ($0.usebyDate?.daysLeft())! > 7 }
-        
-        if redArray.count > 0 {
-            dateSlices.append(("3일 이하", Double(redArray.count), .red))
-        }
-        if orangeArray.count > 0 {
-            dateSlices.append(("7일 미만", Double(orangeArray.count), .orange))
-        }
-        if redArray.count > 0 {
-            dateSlices.append(("7일 이상", Double(greenArray.count), .green))
         }
     }
     
@@ -199,11 +174,59 @@ struct ChartView: View {
             VStack(spacing: 10) {
                 ForEach(currentSlices, id: \.self.0) { slice in
                     DetailRow(colour: slice.2, title: slice.0, percentage: Int((slice.1 / currentSlices.reduce(0) { $0 + $1.1 }) * 100), count: Int(slice.1))
+                        .onTapGesture {
+                            Task {
+                                if title == "식품 유형" {
+                                    selectedList = foods.filter { $0.category == slice.0 }
+                                } else {
+                                    if slice.0 == "3일 이하" {
+                                        selectedList = foods.filter { ($0.usebyDate?.daysLeft())! <= 3 }
+                                    } else if slice.0 == "7일 미만" {
+                                        selectedList = foods.filter { ($0.usebyDate?.daysLeft())! < 7 && ($0.usebyDate?.daysLeft())! > 3 }
+                                    } else {
+                                        selectedList = foods.filter { ($0.usebyDate?.daysLeft())! >= 7 }
+                                    }
+                                }
+
+                                isShowingSheet.toggle()
+                            }
+                        }
                 }
             }
         }
         .padding(.bottom, 50)
         .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.grey2))
+    }
+    
+    private func getCategorySlices() {
+        var colourIndex = 0
+        categorySlices = []
+        
+        for category in Category.casesStringArray() {
+            let count = foods.filter { $0.category == category }.count
+            if count > 0 {
+                categorySlices.append((category, Double(count), colours[colourIndex]))
+                colourIndex += 1;
+            }
+        }
+    }
+    
+    private func getDateSlices() {
+        dateSlices = []
+        
+        let redArray = foods.filter { ($0.usebyDate?.daysLeft())! <= 3 }
+        let orangeArray = foods.filter { ($0.usebyDate?.daysLeft())! < 7 && ($0.usebyDate?.daysLeft())! > 3 }
+        let greenArray = foods.filter { ($0.usebyDate?.daysLeft())! >= 7 }
+        
+        if redArray.count > 0 {
+            dateSlices.append(("3일 이하", Double(redArray.count), .red))
+        }
+        if orangeArray.count > 0 {
+            dateSlices.append(("7일 미만", Double(orangeArray.count), .orange))
+        }
+        if redArray.count > 0 {
+            dateSlices.append(("7일 이상", Double(greenArray.count), .green))
+        }
     }
 }
 
