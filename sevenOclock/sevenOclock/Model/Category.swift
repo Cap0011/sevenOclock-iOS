@@ -35,6 +35,41 @@ enum Category: String, CaseIterable {
     static func fromRawValue(rawValue: String) -> Category? {
         return Category(rawValue: rawValue)
     }
+    
+    func imageName() -> String {
+        switch self {
+        case .all:
+            return ""
+        case .meat:
+            return "meat"
+        case .seafood:
+            return "seafood"
+        case .dairy:
+            return "dairy"
+        case .egg:
+            return "egg"
+        case .vegetable:
+            return "vegetable"
+        case .fruit:
+            return "fruit"
+        case .grain:
+            return "grain"
+        case .noodle:
+            return "noodle"
+        case .side:
+            return "side"
+        case .instant:
+            return "instant"
+        case .sauce:
+            return "sauce"
+        case .snack:
+            return "snack"
+        case .beverage:
+            return "beverage"
+        case .others:
+            return "others"
+        }
+    }
 
     func getSubcategories() -> [String] {
         switch self {

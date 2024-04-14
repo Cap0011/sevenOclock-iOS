@@ -12,6 +12,7 @@ struct AddFoodView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     
     @State var foodList: [TemporaryFood] = []
+    @State var isShowingToast = false
     
     var body: some View {
         NavigationView {
@@ -48,11 +49,14 @@ struct AddFoodView: View {
                     Text("완료")
                         .font(.suite(.bold, size: 16))
                         .onTapGesture {
-                            // TODO: Save input information
-                            for food in foodList {
-                                addFood(data: food)
+                            if foodList.map({ $0.name }).contains("") {
+                                isShowingToast.toggle()
+                            } else {
+                                for food in foodList {
+                                    addFood(data: food)
+                                }
+                                dismiss()
                             }
-                            dismiss()
                         }
                 }
             }

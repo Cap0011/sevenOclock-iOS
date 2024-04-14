@@ -40,6 +40,7 @@
 		C7AFB8BD2BC2E19F0023C46F /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB8BC2BC2E19E0023C46F /* PersistenceController.swift */; };
 		C7AFB8BF2BC3CCEC0023C46F /* TemporaryFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB8BE2BC3CCEC0023C46F /* TemporaryFood.swift */; };
 		C7FBC2182BC6E1EC0050F9A3 /* FoodListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FBC2172BC6E1EC0050F9A3 /* FoodListView.swift */; };
+		C7FBC21A2BC7A0310050F9A3 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FBC2192BC7A0310050F9A3 /* Toast.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +79,7 @@
 		C7AFB8BC2BC2E19E0023C46F /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		C7AFB8BE2BC3CCEC0023C46F /* TemporaryFood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryFood.swift; sourceTree = "<group>"; };
 		C7FBC2172BC6E1EC0050F9A3 /* FoodListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListView.swift; sourceTree = "<group>"; };
+		C7FBC2192BC7A0310050F9A3 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +156,7 @@
 				C7AFB8982BB3A6F50023C46F /* SelectionBar.swift */,
 				C7AFB89C2BB3C9E00023C46F /* FoodItem.swift */,
 				C7AFB8B02BC1268E0023C46F /* IngredientCapsule.swift */,
+				C7FBC2192BC7A0310050F9A3 /* Toast.swift */,
 			);
 			path = Reusable;
 			sourceTree = "<group>";
@@ -295,6 +298,7 @@
 				C7AFB8B12BC1268E0023C46F /* IngredientCapsule.swift in Sources */,
 				C7AFB89D2BB3C9E00023C46F /* FoodItem.swift in Sources */,
 				C7AFB8872BB30A600023C46F /* Category.swift in Sources */,
+				C7FBC21A2BC7A0310050F9A3 /* Toast.swift in Sources */,
 				C7AFB8AF2BC0F32D0023C46F /* RecipeSearchView.swift in Sources */,
 				C7AFB8972BB3A4580023C46F /* Preservation.swift in Sources */,
 				C7AFB8BF2BC3CCEC0023C46F /* TemporaryFood.swift in Sources */,
