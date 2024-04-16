@@ -28,7 +28,6 @@ struct AddFoodView: View {
                 .padding(.vertical, 25)
             }
             .onAppear {
-                // TODO: Replace dummy data
                 if foodList.isEmpty {
                     foodList.append(TemporaryFood(id: UUID()))
                 }
@@ -80,7 +79,6 @@ struct AddFoodView: View {
                         .font(.system(size: 18, weight: .regular))
                         .padding(.bottom, 5)
                         .onTapGesture {
-                            // TODO: Remove this element
                             list = list.filter { $0.id != food.id }
                         }
                 }

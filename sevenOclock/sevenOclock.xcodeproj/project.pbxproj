@@ -223,6 +223,8 @@
 			dependencies = (
 			);
 			name = sevenOclock;
+			packageProductDependencies = (
+			);
 			productName = sevenOclock;
 			productReference = C7272C192BB1757A00B1397C /* sevenOclock.app */;
 			productType = "com.apple.product-type.application";
@@ -251,6 +253,8 @@
 				Base,
 			);
 			mainGroup = C7272C102BB1757A00B1397C;
+			packageReferences = (
+			);
 			productRefGroup = C7272C1A2BB1757A00B1397C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
