@@ -64,7 +64,6 @@ final class RecipeManager: ObservableObject {
                         .getDocumentsWithSnapshot(as: Recipe.self)
                 case RecipeSortOption.byView.rawValue:
                     return try await recipeCollection
-                        .whereField("ingredients", arrayContainsAny: ingredients)
                         .order(by: "viewNumber", descending: true)
                         .limit(to: 10)
                         .start(afterDocument: lastDocument)
@@ -81,7 +80,6 @@ final class RecipeManager: ObservableObject {
                         .getDocumentsWithSnapshot(as: Recipe.self)
                 case RecipeSortOption.byView.rawValue:
                     return try await recipeCollection
-                        .whereField("ingredients", arrayContainsAny: ingredients)
                         .order(by: "viewNumber", descending: true)
                         .limit(to: 10)
                         .getDocumentsWithSnapshot(as: Recipe.self)
