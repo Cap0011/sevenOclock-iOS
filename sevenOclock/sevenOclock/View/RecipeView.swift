@@ -8,13 +8,16 @@
 import SwiftUI
 
 struct RecipeView: View {
+    @Environment(\.managedObjectContext) var managedObjectContext
+    @FetchRequest(entity: Food.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Food.usebyDate, ascending: true)]) var foods: FetchedResults<Food>
+    
     @State private var searchTitle = ""
     @State private var isDateTagSelected = false
-    @State private var selectedSortOption = "냉장고 일치 순"
+    @State private var selectedSortOption = RecipeSortOption.byReview.rawValue
     @State private var isShowingWebView = false
     @State private var selectedURL = ""
     
-    @State private var recipes: [Recipe] = Recipe.dummyData
+    @StateObject private var viewModel = RecipeViewModel()
     
     @State private var tags: [String] = []
     
@@ -75,6 +78,14 @@ struct RecipeView: View {
                 print(selectedURL)
             }
         }
+        .task {
+            try? await viewModel.getAllRecipes()
+        }
+//        .onChange(of: selectedSortOption) { _ in
+//            Task {
+//                try? await viewModel.getAllRecipes()
+//            }
+//        }
     }
     
     var searchBar: some View {
@@ -118,8 +129,8 @@ struct RecipeView: View {
     
     var recipeList: some View {
         VStack(spacing: 15) {
-            ForEach(recipes, id: \.id) { recipe in
-                RecipeCard(recipe: recipe)
+            ForEach(viewModel.recipes, id: \.ID) { recipe in
+                RecipeCard(recipe: recipe, missingIngredients: getMissingIngredients(ingredients: recipe.ingredients))
                     .onTapGesture {
                         Task {
                             selectedURL = recipe.link
@@ -133,6 +144,7 @@ struct RecipeView: View {
     
     struct RecipeCard: View {
         let recipe: Recipe
+        let missingIngredients: [String]
         
         var body: some View {
             HStack(alignment: .bottom, spacing: 10) {
@@ -180,7 +192,7 @@ struct RecipeView: View {
                         
                         Image(systemName: "xmark.circle.fill")
                             
-                        Text("옥수수, 베이컨")
+                        Text(missingIngredients.joined(separator: ", "))
                             .lineLimit(1)
                             .padding(4)
                             .padding(.horizontal, 2)
@@ -205,20 +217,31 @@ struct RecipeView: View {
                     .frame(width: 36, height: 36)
                     .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
                 
-                Circle()
-                    .trim(from: 0.0, to: CGFloat(Double(recipe.similarity ?? 0) * 0.01))
-                    .foregroundStyle(.circleOrange)
-                    .frame(width: 32, height: 32)
-                    .rotationEffect(.degrees(-90))
+                if recipe.ingredients.count > 0 && missingIngredients.count != recipe.ingredients.count {
+                    Circle()
+                        .trim(from: 0.0, to: 1 - Double(missingIngredients.count) / Double(recipe.ingredients.count))
+                        .foregroundStyle(.circleOrange)
+                        .frame(width: 32, height: 32)
+                        .rotationEffect(.degrees(-90))
+                }
                 
                 Circle()
                     .foregroundStyle(.white)
                     .frame(width: 28, height: 28)
                 
-                Text("3 / \(recipe.ingredients.count)")
+                Text("\(recipe.ingredients.count - missingIngredients.count) / \(recipe.ingredients.count)")
                     .font(.suite(.bold, size: 11))
             }
             .padding(5)
+        }
+    }
+    
+    func getMissingIngredients(ingredients: [String]) -> [String] {
+        let subcategories = Array(Set(foods.map { $0.subcategory }))
+        return ingredients.filter { ingredient in
+            return !subcategories.contains { subcategory in
+                return ingredient.contains(subcategory ?? "N/A")
+            }
         }
     }
 }

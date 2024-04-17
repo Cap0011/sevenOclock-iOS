@@ -8,7 +8,7 @@
 import Foundation
 
 enum RecipeSortOption: String, CaseIterable {
-    case bySimilarity = "냉장고 일치 순"
+//    case bySimilarity = "냉장고 일치 순"
     case byReview = "리뷰 수 순"
     case byView = "조회수 순"
     

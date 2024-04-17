@@ -15,5 +15,7 @@
 		<string>SUITE-Regular.otf</string>
 		<string>SUITE-SemiBold.otf</string>
 	</array>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<string>NO</string>
 </dict>
 </plist>
