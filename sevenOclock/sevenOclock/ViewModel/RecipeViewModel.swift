@@ -6,12 +6,24 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
 
 @MainActor
 final class RecipeViewModel: ObservableObject {
     @Published private(set) var recipes: [Recipe] = []
+    @Published var selectedFilters: [String]?
+    @Published var selectedSortOption = RecipeSortOption.byReview.rawValue
     
-    func getAllRecipes() async throws {
-        self.recipes = try await RecipeManager.shared.getAllRecipes()
+    private var lastDocument: DocumentSnapshot?
+    
+    func emptyRecipes() {
+        self.recipes = []
+        self.lastDocument = nil
+    }
+
+    func fetchRecipes() async throws {
+        let (newRecipes, lastDocument) = try await RecipeManager.shared.fetchRecipes(ingredients: selectedFilters, searchBy: selectedSortOption, lastDocument: lastDocument)
+        self.recipes.append(contentsOf: newRecipes)
+        self.lastDocument = lastDocument
     }
 }

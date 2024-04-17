@@ -13,7 +13,7 @@ struct RecipeView: View {
     
     @State private var searchTitle = ""
     @State private var isDateTagSelected = false
-    @State private var selectedSortOption = RecipeSortOption.byReview.rawValue
+    
     @State private var isShowingWebView = false
     @State private var selectedURL = ""
     
@@ -43,7 +43,7 @@ struct RecipeView: View {
                     HStack {
                         Spacer()
                         
-                        SelectionBar(selections: RecipeSortOption.allCasesStringArray(), selected: $selectedSortOption)
+                        SelectionBar(selections: RecipeSortOption.allCasesStringArray(), selected: $viewModel.selectedSortOption)
                     }
                     .padding(.horizontal, 20)
                     
@@ -79,13 +79,20 @@ struct RecipeView: View {
             }
         }
         .task {
-            try? await viewModel.getAllRecipes()
+            try? await viewModel.fetchRecipes()
         }
-//        .onChange(of: selectedSortOption) { _ in
-//            Task {
-//                try? await viewModel.getAllRecipes()
-//            }
-//        }
+        .onChange(of: viewModel.selectedSortOption) { _ in
+            Task {
+                viewModel.emptyRecipes()
+                try? await viewModel.fetchRecipes()
+            }
+        }
+        .onChange(of: isDateTagSelected) { _ in
+            // TODO: Update searchOption
+        }
+        .onChange(of: tags) { _ in
+            // TODO: Update searchOption
+        }
     }
     
     var searchBar: some View {
@@ -128,15 +135,26 @@ struct RecipeView: View {
     }
     
     var recipeList: some View {
-        VStack(spacing: 15) {
+        LazyVStack(spacing: 15) {
             ForEach(viewModel.recipes, id: \.ID) { recipe in
-                RecipeCard(recipe: recipe, missingIngredients: getMissingIngredients(ingredients: recipe.ingredients))
-                    .onTapGesture {
-                        Task {
-                            selectedURL = recipe.link
-                            isShowingWebView.toggle()
+                VStack {
+                    RecipeCard(recipe: recipe, missingIngredients: getMissingIngredients(ingredients: recipe.ingredients))
+                        .onTapGesture {
+                            Task {
+                                selectedURL = recipe.link
+                                isShowingWebView.toggle()
+                            }
                         }
+                    
+                    if recipe.ID == viewModel.recipes.last?.ID {
+                        ProgressView()
+                            .onAppear {
+                                Task {
+                                    try await viewModel.fetchRecipes()
+                                }
+                            }
                     }
+                }
             }
         }
         .padding(.horizontal, 20)
@@ -190,14 +208,16 @@ struct RecipeView: View {
                     HStack(spacing: 5) {
                         Spacer()
                         
-                        Image(systemName: "xmark.circle.fill")
+                        if missingIngredients.count > 0 {
+                            Image(systemName: "xmark.circle.fill")
                             
-                        Text(missingIngredients.joined(separator: ", "))
-                            .lineLimit(1)
-                            .padding(4)
-                            .padding(.horizontal, 2)
-                            .background(RoundedRectangle(cornerRadius: 4).foregroundStyle(.white))
-                            .font(.suite(.regular, size: 13))
+                            Text(missingIngredients.joined(separator: ", "))
+                                .lineLimit(1)
+                                .padding(4)
+                                .padding(.horizontal, 2)
+                                .background(RoundedRectangle(cornerRadius: 4).foregroundStyle(.white))
+                                .font(.suite(.regular, size: 13))
+                        }
                     }
                     .foregroundStyle(.recipeOrange)
                     .padding(.top, 10)
