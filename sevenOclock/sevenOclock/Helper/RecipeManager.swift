@@ -14,38 +14,80 @@ final class RecipeManager: ObservableObject {
     
     private let recipeCollection = Firestore.firestore().collection("recipes")
 
-    func fetchRecipes(ingredients: [String]?, searchBy: String, lastDocument: DocumentSnapshot?) async throws -> (recipes: [Recipe], lastDocument: DocumentSnapshot?) {
-        if let lastDocument {
-            switch searchBy {
-            case RecipeSortOption.byReview.rawValue:
-                return try await recipeCollection
-                    .order(by: "reviewNumber", descending: true)
-                    .limit(to: 20)
-                    .start(afterDocument: lastDocument)
-                    .getDocumentsWithSnapshot(as: Recipe.self)
-            case RecipeSortOption.byView.rawValue:
-                return try await recipeCollection
-                    .order(by: "viewNumber", descending: true)
-                    .limit(to: 20)
-                    .start(afterDocument: lastDocument)
-                    .getDocumentsWithSnapshot(as: Recipe.self)
-            default:
-                return ([], nil)
+    func fetchRecipes(ingredients: [String], searchBy: String, lastDocument: DocumentSnapshot?) async throws -> (recipes: [Recipe], lastDocument: DocumentSnapshot?) {
+        if !ingredients.isEmpty {
+            if let lastDocument {
+                switch searchBy {
+                case RecipeSortOption.byReview.rawValue:
+                    return try await recipeCollection
+                        .whereField("ingredients", arrayContainsAny: ingredients)
+                        .order(by: "reviewNumber", descending: true)
+                        .limit(to: 10)
+                        .start(afterDocument: lastDocument)
+                        .getDocumentsWithSnapshot(as: Recipe.self)
+                case RecipeSortOption.byView.rawValue:
+                    return try await recipeCollection
+                        .whereField("ingredients", arrayContainsAny: ingredients)
+                        .order(by: "viewNumber", descending: true)
+                        .limit(to: 10)
+                        .start(afterDocument: lastDocument)
+                        .getDocumentsWithSnapshot(as: Recipe.self)
+                default:
+                    return ([], nil)
+                }
+            } else {
+                switch searchBy {
+                case RecipeSortOption.byReview.rawValue:
+                    return try await recipeCollection
+                        .whereField("ingredients", arrayContainsAny: ingredients)
+                        .order(by: "reviewNumber", descending: true)
+                        .limit(to: 10)
+                        .getDocumentsWithSnapshot(as: Recipe.self)
+                case RecipeSortOption.byView.rawValue:
+                    return try await recipeCollection
+                        .whereField("ingredients", arrayContainsAny: ingredients)
+                        .order(by: "viewNumber", descending: true)
+                        .limit(to: 10)
+                        .getDocumentsWithSnapshot(as: Recipe.self)
+                default:
+                    return ([], nil)
+                }
             }
         } else {
-            switch searchBy {
-            case RecipeSortOption.byReview.rawValue:
-                return try await recipeCollection
-                    .order(by: "reviewNumber", descending: true)
-                    .limit(to: 20)
-                    .getDocumentsWithSnapshot(as: Recipe.self)
-            case RecipeSortOption.byView.rawValue:
-                return try await recipeCollection
-                    .order(by: "viewNumber", descending: true)
-                    .limit(to: 20)
-                    .getDocumentsWithSnapshot(as: Recipe.self)
-            default:
-                return ([], nil)
+            if let lastDocument {
+                switch searchBy {
+                case RecipeSortOption.byReview.rawValue:
+                    return try await recipeCollection
+                        .order(by: "reviewNumber", descending: true)
+                        .limit(to: 10)
+                        .start(afterDocument: lastDocument)
+                        .getDocumentsWithSnapshot(as: Recipe.self)
+                case RecipeSortOption.byView.rawValue:
+                    return try await recipeCollection
+                        .whereField("ingredients", arrayContainsAny: ingredients)
+                        .order(by: "viewNumber", descending: true)
+                        .limit(to: 10)
+                        .start(afterDocument: lastDocument)
+                        .getDocumentsWithSnapshot(as: Recipe.self)
+                default:
+                    return ([], nil)
+                }
+            } else {
+                switch searchBy {
+                case RecipeSortOption.byReview.rawValue:
+                    return try await recipeCollection
+                        .order(by: "reviewNumber", descending: true)
+                        .limit(to: 10)
+                        .getDocumentsWithSnapshot(as: Recipe.self)
+                case RecipeSortOption.byView.rawValue:
+                    return try await recipeCollection
+                        .whereField("ingredients", arrayContainsAny: ingredients)
+                        .order(by: "viewNumber", descending: true)
+                        .limit(to: 10)
+                        .getDocumentsWithSnapshot(as: Recipe.self)
+                default:
+                    return ([], nil)
+                }
             }
         }
     }

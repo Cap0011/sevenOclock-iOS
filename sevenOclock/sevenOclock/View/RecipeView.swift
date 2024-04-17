@@ -87,11 +87,19 @@ struct RecipeView: View {
                 try? await viewModel.fetchRecipes()
             }
         }
-        .onChange(of: isDateTagSelected) { _ in
-            // TODO: Update searchOption
+        .onChange(of: isDateTagSelected) { newValue in
+            Task {
+                viewModel.updateFilters(foods: newValue ? Array(foods) : nil, searchTags: tags)
+                viewModel.emptyRecipes()
+                try? await viewModel.fetchRecipes()
+            }
         }
-        .onChange(of: tags) { _ in
-            // TODO: Update searchOption
+        .onChange(of: tags.count) { _ in
+            Task {
+                viewModel.updateFilters(foods: Array(foods), searchTags: tags)
+                viewModel.emptyRecipes()
+                try? await viewModel.fetchRecipes()
+            }
         }
     }
     
