@@ -35,4 +35,15 @@ class TemporaryFood: ObservableObject, Identifiable, Hashable {
         self.preservation = Preservation.fridge.rawValue
         self.enrollDate = nil
     }
+    
+    init(id: UUID, name: String) {
+        self.id = id
+        self.name = name
+        self.count = 1
+        self.category = Category.meat.rawValue
+        self.subcategory = Category.meat.getSubcategories().first!
+        self.usebyDate = Date()
+        self.preservation = Preservation.fridge.rawValue
+        self.enrollDate = nil
+    }
 }

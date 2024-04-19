@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import CarBode
+import AVFoundation
 
 struct MyFridgeView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
@@ -45,12 +47,15 @@ struct MyFridgeView: View {
     
     @State var isShowingAddConfirmation = false
     @State var isShowingAddSheet = false
+    @State var isShowingScanner = false
     
     @State var selectedFood: Food?
     @State var isShowingAlert = false
     @State var inputText = ""
     
     @State private var updatedObject: Food?
+    
+    @State var temporaryFoodList: [TemporaryFood] = []
     
     var body: some View {
         NavigationView {
@@ -80,17 +85,31 @@ struct MyFridgeView: View {
                     // TODO: 영수증 촬영
                 }
                 Button("바코드 인식") {
-                    // TODO: 바코드 인식
+                    isShowingScanner.toggle()
                 }
                 Button("직접 입력") {
-                    isShowingAddSheet.toggle()
+                    Task {
+                        temporaryFoodList = []
+                        isShowingAddSheet.toggle()
+                    }
                 }
                 Button("취소", role: .cancel) { }
             } message: {
                 Text("어떻게 냉장고에 추가하실 건가요?")
             }
             .sheet(isPresented: $isShowingAddSheet) {
-                AddFoodView()
+                AddFoodView(foodList: $temporaryFoodList)
+            }
+            .sheet(isPresented: $isShowingScanner) {
+                CBScanner(
+                    supportBarcode: .constant([.qr, .ean13]),
+                    scanInterval: .constant(5.0)
+                ){
+                    isShowingScanner = false
+                    fetchData(barcodeNumber: $0.value)
+                } onDraw: {
+                    $0.draw(lineWidth: 2, lineColor: UIColor.orange, fillColor: UIColor(red: 0, green: 0, blue: 0.2, alpha: 0.4))
+                }
             }
             .alert("꺼낼 \(selectedFood?.name ?? "") 수량을 입력해 주세요.", isPresented: $isShowingAlert) {
                 TextField("", text: $inputText)
@@ -246,6 +265,30 @@ struct MyFridgeView: View {
         
         managedObjectContext.delete(data)
         saveContext()
+    }
+
+    func fetchData(barcodeNumber: String) {
+        if let url = URL(string: "http://openapi.foodsafetykorea.go.kr/api/\(APIKey.barcodeKey)/C005/json/1/5/BAR_CD=\(barcodeNumber)") {
+            let request = URLRequest.init(url: url)
+            
+            URLSession.shared.dataTask(with: request) {
+                (data, response, error) in guard let data = data else {return}
+                let decoder = JSONDecoder()
+                print(response as Any)
+                do { 
+                    let json = try decoder.decode(FoodDataModel.self , from: data)
+                    print(json)
+                    Task {
+                        temporaryFoodList.append(TemporaryFood(id: UUID(), name: json.C005.row.first?.PRDLST_NM ?? ""))
+                        print(temporaryFoodList.count)
+                        isShowingAddSheet.toggle()
+                    }
+                }
+                catch {
+                    print(error)
+                }
+            }.resume()
+        }
     }
 }
 

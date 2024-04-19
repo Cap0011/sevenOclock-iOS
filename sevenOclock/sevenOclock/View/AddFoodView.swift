@@ -11,7 +11,7 @@ struct AddFoodView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.managedObjectContext) var managedObjectContext
     
-    @State var foodList: [TemporaryFood] = []
+    @Binding var foodList: [TemporaryFood]
     @State var isShowingToast = false
     
     var body: some View {
@@ -31,6 +31,9 @@ struct AddFoodView: View {
                 if foodList.isEmpty {
                     foodList.append(TemporaryFood(id: UUID()))
                 }
+            }
+            .onDisappear {
+                foodList = []
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
