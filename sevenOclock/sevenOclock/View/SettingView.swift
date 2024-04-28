@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 struct SettingView: View {
     @Environment(\.dismiss) private var dismiss
@@ -79,10 +80,14 @@ struct SettingView: View {
             .padding(.top, 25)
         }
         .onAppear {
-            // TODO: Load current setting for alarm
+            isAlarmOn = UserDefaults.standard.bool(forKey: "notificationEnabled")
         }
-        .onChange(of: isAlarmOn) { _ in
-            // TODO: Update alarm setting
+        .onChange(of: isAlarmOn) { newValue in
+            if newValue {
+                requestNotificationPermission()
+            } else {
+                UserDefaults.standard.set(newValue, forKey: "notificationEnabled")
+            }
         }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -98,6 +103,17 @@ struct SettingView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
+    }
+    
+    func requestNotificationPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+            if success {
+                print("알림 권한이 허용되었습니다.")
+                UserDefaults.standard.set(true, forKey: "notificationEnabled")
+            } else if let error = error {
+                print(error.localizedDescription)
+            }
+        }
     }
 }
 

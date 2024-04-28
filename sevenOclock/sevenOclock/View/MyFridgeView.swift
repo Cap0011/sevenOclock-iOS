@@ -10,6 +10,7 @@ import CarBode
 import AVFoundation
 
 struct MyFridgeView: View {
+    @Environment(\.scenePhase) var scenePhase
     @Environment(\.managedObjectContext) var managedObjectContext
     @FetchRequest(entity: Food.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Food.usebyDate, ascending: true)]) var foods: FetchedResults<Food>
     
@@ -155,6 +156,14 @@ struct MyFridgeView: View {
             }
             .navigationBarTitleDisplayMode(.inline)
         }
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .background {
+                UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+                if UserDefaults.standard.bool(forKey: "notificationEnabled") {
+                    scheduleNotification()
+                }
+            }
+        }
     }
     
     var category: some View {
@@ -265,6 +274,24 @@ struct MyFridgeView: View {
         
         managedObjectContext.delete(data)
         saveContext()
+    }
+    
+    private func scheduleNotification() {
+        let urgentFoods = foods.filter { $0.usebyDate?.daysLeft() ?? 999 <= 3 }
+        if let oldest = urgentFoods.first {
+            let content = UNMutableNotificationContent()
+            content.title = "소비기한 알림"
+            content.body = oldest.usebyDate!.daysLeft() < 0 ? "\(oldest.name ?? "식품")의 소비기한이 지났습니다." : "\(oldest.name ?? "식품")의 소비기한이 임박했습니다."
+            content.sound = UNNotificationSound.default
+            
+            var dateComponents = DateComponents()
+            dateComponents.hour = 7
+            
+            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+            
+            UNUserNotificationCenter.current().add(request)
+        }
     }
 
     func fetchData(barcodeNumber: String) {
