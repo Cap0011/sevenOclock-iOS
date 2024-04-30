@@ -7,88 +7,144 @@
 
 import Foundation
 
+// MARK: - ReceiptResponse
 struct ReceiptResponse: Codable {
-    let version: String
-    let requestId: String
-    let timestamp: TimeInterval
+    let version, requestID: String
+    let timestamp: Int
     let images: [ReceiptImage]
+
+    enum CodingKeys: String, CodingKey {
+        case version
+        case requestID = "requestId"
+        case timestamp, images
+    }
 }
 
+// MARK: - Image
 struct ReceiptImage: Codable {
     let receipt: Receipt
-    let uid: String
-    let name: String
-    let inferResult: String
-    let message: String
+    let uid, name, inferResult, message: String
     let validationResult: ValidationResult
 }
 
+// MARK: - Receipt
 struct Receipt: Codable {
     let meta: Meta
     let result: Result
 }
 
+// MARK: - Meta
 struct Meta: Codable {
     let estimatedLanguage: String
 }
 
+// MARK: - Result
 struct Result: Codable {
     let storeInfo: StoreInfo
     let paymentInfo: PaymentInfo
     let subResults: [SubResult]
-    let totalPrice: Price
+    let totalPrice: TotalPrice
 }
 
-struct StoreInfo: Codable {
-    let name: InfoText
-    let subName: InfoText
-    let bizNum: InfoText
-    let addresses: [InfoText]
-    let tel: [InfoText]
+// MARK: - PaymentInfo
+struct PaymentInfo: Codable {
+    let date: DateClass
+    let time: Time
+    let cardInfo: CardInfo
+    let confirmNum: ConfirmNum
 }
 
-struct InfoText: Codable {
+// MARK: - CardInfo
+struct CardInfo: Codable {
+    let company, number: BizNum
+}
+
+// MARK: - BizNum
+struct BizNum: Codable {
     let text: String
-    let formatted: FormattedText
-    let boundingPolys: [[Vertex]]
+    let formatted: BizNumFormatted
+    let boundingPolys: [BoundingPoly]
 }
 
-struct FormattedText: Codable {
+// MARK: - BoundingPoly
+struct BoundingPoly: Codable {
+    let vertices: [Vertex]
+}
+
+// MARK: - Vertex
+struct Vertex: Codable {
+    let x, y: Int
+}
+
+// MARK: - BizNumFormatted
+struct BizNumFormatted: Codable {
     let value: String
 }
 
-struct Vertex: Codable {
-    let x: Double
-    let y: Double
+// MARK: - ConfirmNum
+struct ConfirmNum: Codable {
+    let text: String
+    let boundingPolys: [BoundingPoly]
 }
 
-struct PaymentInfo: Codable {
-    let date: InfoText
-    let time: InfoText
-    let cardInfo: CardInfo
-    let confirmNum: InfoText
+// MARK: - DateClass
+struct DateClass: Codable {
+    let text: String
+    let formatted: DateFormatted
+    let boundingPolys: [BoundingPoly]
 }
 
-struct CardInfo: Codable {
-    let company: InfoText
-    let number: InfoText
+// MARK: - DateFormatted
+struct DateFormatted: Codable {
+    let year, month, day: String
 }
 
+// MARK: - Time
+struct Time: Codable {
+    let text: String
+    let formatted: TimeFormatted
+    let boundingPolys: [BoundingPoly]
+}
+
+// MARK: - TimeFormatted
+struct TimeFormatted: Codable {
+    let hour, minute, second: String
+}
+
+// MARK: - StoreInfo
+struct StoreInfo: Codable {
+    let name, subName, bizNum: BizNum
+    let addresses, tel: [BizNum]
+}
+
+// MARK: - SubResult
 struct SubResult: Codable {
     let items: [Item]
 }
 
+// MARK: - Item
 struct Item: Codable {
-    let name: InfoText
-    let count: InfoText
+    let name, count: BizNum
     let price: Price
 }
 
+// MARK: - Price
 struct Price: Codable {
-    let price: InfoText
-    let unitPrice: InfoText
+    let price, unitPrice: BizNum
 }
 
+// MARK: - TotalPrice
+struct TotalPrice: Codable {
+    let price: BizNum
+}
+
+// MARK: - ValidationResult
 struct ValidationResult: Codable {
     let result: String
+}
+
+struct ReceiptItem: Hashable {
+    let id: UUID
+    let name: String
+    let count: Int
 }

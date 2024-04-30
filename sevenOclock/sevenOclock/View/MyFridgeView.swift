@@ -13,6 +13,7 @@ struct MyFridgeView: View {
     @Environment(\.scenePhase) var scenePhase
     @Environment(\.managedObjectContext) var managedObjectContext
     @FetchRequest(entity: Food.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Food.usebyDate, ascending: true)]) var foods: FetchedResults<Food>
+    @StateObject var receiptViewModel = ReceiptViewModel()
     
     var filteredFoods: [Food] {
         var result = Array(foods)
@@ -57,6 +58,9 @@ struct MyFridgeView: View {
     @State private var updatedObject: Food?
     
     @State var temporaryFoodList: [TemporaryFood] = []
+    
+    @State var type: UIImagePickerController.SourceType = .photoLibrary
+    @State var isShowingReceiptSheet = false
     
     var body: some View {
         NavigationView {
@@ -107,10 +111,13 @@ struct MyFridgeView: View {
                     scanInterval: .constant(5.0)
                 ){
                     isShowingScanner = false
-                    fetchData(barcodeNumber: $0.value)
+                    fetchBarcodeData(barcodeNumber: $0.value)
                 } onDraw: {
                     $0.draw(lineWidth: 2, lineColor: UIColor.orange, fillColor: UIColor(red: 0, green: 0, blue: 0.2, alpha: 0.4))
                 }
+            }
+            .sheet(isPresented: $isShowingReceiptSheet) {
+                CheckItemView(items: receiptViewModel.items, foodList: $temporaryFoodList, isShowingAddSheet: $isShowingAddSheet)
             }
             .alert("꺼낼 \(selectedFood?.name ?? "") 수량을 입력해 주세요.", isPresented: $isShowingAlert) {
                 TextField("", text: $inputText)
@@ -156,12 +163,20 @@ struct MyFridgeView: View {
             }
             .navigationBarTitleDisplayMode(.inline)
         }
+        .onAppear {
+            fetchReceiptData()
+        }
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .background {
                 UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
                 if UserDefaults.standard.bool(forKey: "notificationEnabled") {
                     scheduleNotification()
                 }
+            }
+        }
+        .onChange(of: receiptViewModel.items.count) { newValue in
+            if(newValue != 0) {
+                isShowingReceiptSheet.toggle()
             }
         }
     }
@@ -293,8 +308,15 @@ struct MyFridgeView: View {
             UNUserNotificationCenter.current().add(request)
         }
     }
+    
+    func fetchReceiptData() {
+        if let url = Bundle.main.url(forResource: "dummyreceipt", withExtension: "json"),
+           let jsonData = try? Data(contentsOf: url) {
+            receiptViewModel.parseReceiptResponse(jsonData: jsonData)
+        }
+    }
 
-    func fetchData(barcodeNumber: String) {
+    func fetchBarcodeData(barcodeNumber: String) {
         if let url = URL(string: "http://openapi.foodsafetykorea.go.kr/api/\(APIKey.barcodeKey)/C005/json/1/5/BAR_CD=\(barcodeNumber)") {
             let request = URLRequest.init(url: url)
             

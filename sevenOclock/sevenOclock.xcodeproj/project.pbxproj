@@ -74,6 +74,8 @@
 		C7D660C32BD29F2800D30CFD /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D660C22BD29F2800D30CFD /* Secret.swift */; };
 		C7D660C52BDE482100D30CFD /* dummyreceipt.json in Resources */ = {isa = PBXBuildFile; fileRef = C7D660C42BDE482000D30CFD /* dummyreceipt.json */; };
 		C7D660C72BDE4A6000D30CFD /* ReceiptResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D660C62BDE4A6000D30CFD /* ReceiptResponse.swift */; };
+		C7D660C92BDE4B1200D30CFD /* ReceiptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D660C82BDE4B1200D30CFD /* ReceiptViewModel.swift */; };
+		C7D660CE2BDF688600D30CFD /* CheckItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D660CD2BDF688600D30CFD /* CheckItemView.swift */; };
 		C7FBC2182BC6E1EC0050F9A3 /* FoodListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FBC2172BC6E1EC0050F9A3 /* FoodListView.swift */; };
 		C7FBC21A2BC7A0310050F9A3 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FBC2192BC7A0310050F9A3 /* Toast.swift */; };
 /* End PBXBuildFile section */
@@ -120,6 +122,8 @@
 		C7D660C22BD29F2800D30CFD /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
 		C7D660C42BDE482000D30CFD /* dummyreceipt.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = dummyreceipt.json; sourceTree = "<group>"; };
 		C7D660C62BDE4A6000D30CFD /* ReceiptResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptResponse.swift; sourceTree = "<group>"; };
+		C7D660C82BDE4B1200D30CFD /* ReceiptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptViewModel.swift; sourceTree = "<group>"; };
+		C7D660CD2BDF688600D30CFD /* CheckItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckItemView.swift; sourceTree = "<group>"; };
 		C7FBC2172BC6E1EC0050F9A3 /* FoodListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListView.swift; sourceTree = "<group>"; };
 		C7FBC2192BC7A0310050F9A3 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -256,6 +260,7 @@
 				C7AFB8B22BC132270023C46F /* ChartView.swift */,
 				C7AFB8B42BC28AAB0023C46F /* SettingView.swift */,
 				C7FBC2172BC6E1EC0050F9A3 /* FoodListView.swift */,
+				C7D660CD2BDF688600D30CFD /* CheckItemView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -288,6 +293,7 @@
 			isa = PBXGroup;
 			children = (
 				C7BFA1AE2BCEBB0900480C65 /* RecipeViewModel.swift */,
+				C7D660C82BDE4B1200D30CFD /* ReceiptViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -414,6 +420,7 @@
 				C7AFB8BB2BC2D9070023C46F /* FoodCoreData.xcdatamodeld in Sources */,
 				C7AFB8A32BB52D870023C46F /* AddFoodView.swift in Sources */,
 				C7AFB8852BB2F7660023C46F /* MyCapsule.swift in Sources */,
+				C7D660C92BDE4B1200D30CFD /* ReceiptViewModel.swift in Sources */,
 				C7D660C72BDE4A6000D30CFD /* ReceiptResponse.swift in Sources */,
 				C7AFB8952BB320D60023C46F /* Font.swift in Sources */,
 				C7AFB87D2BB255600023C46F /* UIApplication.swift in Sources */,
@@ -428,6 +435,7 @@
 				C7AFB8B32BC132270023C46F /* ChartView.swift in Sources */,
 				C7AFB8A92BBF85CD0023C46F /* RecipeView.swift in Sources */,
 				C7AFB8AD2BC04F8D0023C46F /* RecipeSortOption.swift in Sources */,
+				C7D660CE2BDF688600D30CFD /* CheckItemView.swift in Sources */,
 				C7D660C32BD29F2800D30CFD /* Secret.swift in Sources */,
 				C7FBC2182BC6E1EC0050F9A3 /* FoodListView.swift in Sources */,
 				C7BFA1AF2BCEBB0900480C65 /* RecipeViewModel.swift in Sources */,
