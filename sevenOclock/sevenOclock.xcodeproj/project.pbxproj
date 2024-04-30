@@ -76,6 +76,7 @@
 		C7D660C72BDE4A6000D30CFD /* ReceiptResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D660C62BDE4A6000D30CFD /* ReceiptResponse.swift */; };
 		C7D660C92BDE4B1200D30CFD /* ReceiptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D660C82BDE4B1200D30CFD /* ReceiptViewModel.swift */; };
 		C7D660CE2BDF688600D30CFD /* CheckItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D660CD2BDF688600D30CFD /* CheckItemView.swift */; };
+		C7D660D02BE0D3BE00D30CFD /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D660CF2BE0D3BE00D30CFD /* ImagePicker.swift */; };
 		C7FBC2182BC6E1EC0050F9A3 /* FoodListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FBC2172BC6E1EC0050F9A3 /* FoodListView.swift */; };
 		C7FBC21A2BC7A0310050F9A3 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FBC2192BC7A0310050F9A3 /* Toast.swift */; };
 /* End PBXBuildFile section */
@@ -124,6 +125,7 @@
 		C7D660C62BDE4A6000D30CFD /* ReceiptResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptResponse.swift; sourceTree = "<group>"; };
 		C7D660C82BDE4B1200D30CFD /* ReceiptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptViewModel.swift; sourceTree = "<group>"; };
 		C7D660CD2BDF688600D30CFD /* CheckItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckItemView.swift; sourceTree = "<group>"; };
+		C7D660CF2BE0D3BE00D30CFD /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		C7FBC2172BC6E1EC0050F9A3 /* FoodListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListView.swift; sourceTree = "<group>"; };
 		C7FBC2192BC7A0310050F9A3 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -285,6 +287,7 @@
 				C7BFA1AB2BCEB9D100480C65 /* RecipeManager.swift */,
 				C7D660C22BD29F2800D30CFD /* Secret.swift */,
 				C7D660C42BDE482000D30CFD /* dummyreceipt.json */,
+				C7D660CF2BE0D3BE00D30CFD /* ImagePicker.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -426,6 +429,7 @@
 				C7AFB87D2BB255600023C46F /* UIApplication.swift in Sources */,
 				C7AFB89F2BB3E9A70023C46F /* Date.swift in Sources */,
 				C7AFB8B12BC1268E0023C46F /* IngredientCapsule.swift in Sources */,
+				C7D660D02BE0D3BE00D30CFD /* ImagePicker.swift in Sources */,
 				C7AFB89D2BB3C9E00023C46F /* FoodItem.swift in Sources */,
 				C7AFB8872BB30A600023C46F /* Category.swift in Sources */,
 				C7FBC21A2BC7A0310050F9A3 /* Toast.swift in Sources */,

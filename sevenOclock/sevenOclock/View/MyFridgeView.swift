@@ -51,6 +51,9 @@ struct MyFridgeView: View {
     @State var isShowingAddSheet = false
     @State var isShowingScanner = false
     
+    @State private var image = UIImage()
+    @State var isShowingCameraSheet = false
+    
     @State var selectedFood: Food?
     @State var isShowingAlert = false
     @State var inputText = ""
@@ -88,6 +91,7 @@ struct MyFridgeView: View {
             .confirmationDialog("Add", isPresented: $isShowingAddConfirmation) {
                 Button("영수증 촬영") {
                     // TODO: 영수증 촬영
+                    isShowingCameraSheet.toggle()
                 }
                 Button("바코드 인식") {
                     isShowingScanner.toggle()
@@ -104,6 +108,9 @@ struct MyFridgeView: View {
             }
             .sheet(isPresented: $isShowingAddSheet) {
                 AddFoodView(foodList: $temporaryFoodList)
+            }
+            .sheet(isPresented: $isShowingCameraSheet) {
+                ImagePicker(sourceType: .camera, selectedImage: self.$image)
             }
             .sheet(isPresented: $isShowingScanner) {
                 CBScanner(
