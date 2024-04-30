@@ -51,7 +51,7 @@ struct MyFridgeView: View {
     @State var isShowingAddSheet = false
     @State var isShowingScanner = false
     
-    @State private var image = UIImage()
+    @State private var image: UIImage?
     @State var isShowingCameraSheet = false
     
     @State var selectedFood: Food?
@@ -62,7 +62,6 @@ struct MyFridgeView: View {
     
     @State var temporaryFoodList: [TemporaryFood] = []
     
-    @State var type: UIImagePickerController.SourceType = .photoLibrary
     @State var isShowingReceiptSheet = false
     
     var body: some View {
@@ -170,9 +169,6 @@ struct MyFridgeView: View {
             }
             .navigationBarTitleDisplayMode(.inline)
         }
-        .onAppear {
-            fetchReceiptData()
-        }
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .background {
                 UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
@@ -180,6 +176,9 @@ struct MyFridgeView: View {
                     scheduleNotification()
                 }
             }
+        }
+        .onChange(of: image) { newValue in
+            fetchReceiptData()
         }
         .onChange(of: receiptViewModel.items.count) { newValue in
             if(newValue != 0) {
@@ -317,9 +316,47 @@ struct MyFridgeView: View {
     }
     
     func fetchReceiptData() {
+        // TODO: Replace dummy data to real query
         if let url = Bundle.main.url(forResource: "dummyreceipt", withExtension: "json"),
            let jsonData = try? Data(contentsOf: url) {
             receiptViewModel.parseReceiptResponse(jsonData: jsonData)
+        }
+        
+        // UIImage to png
+        if let image = image, let data = image.pngData(), let url = URL(string: APIKey.receiptURL) {
+            let base64 = data.base64EncodedString()
+            let naver = Naver(version: "V2", requestID: APIKey.receiptKey, timestamp: 0, images: [NaverImage(format: "png", name: UUID().uuidString, data: base64)] )
+            
+            let encoder = JSONEncoder()
+            
+            let jsonData = try? encoder.encode(naver)
+            let jsonString = String(bytes: jsonData!, encoding: .utf8)
+
+            if let requestBody = jsonString {
+                //URLRequest 생성
+                var request = URLRequest(url: url)
+                request.httpMethod = "POST"
+                request.setValue(APIKey.receiptKey, forHTTPHeaderField: "X-OCR-SECRET")
+                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.httpBody = requestBody.data(using: .utf8)
+                
+                URLSession.shared.dataTask(with: request) {
+                    (data, response, error) in
+                    if let error = error {
+                        print("Request error: ", error)
+                        return
+                    }
+                    
+                    guard let response = response as? HTTPURLResponse else { return }
+                    
+                    if response.statusCode == 200 {
+                        guard let data = data else { return }
+                        DispatchQueue.main.async {
+                            receiptViewModel.parseReceiptResponse(jsonData: data)
+                        }
+                    }
+                }.resume()
+            }
         }
     }
 
@@ -331,9 +368,8 @@ struct MyFridgeView: View {
                 (data, response, error) in guard let data = data else {return}
                 let decoder = JSONDecoder()
                 print(response as Any)
-                do { 
+                do {
                     let json = try decoder.decode(FoodDataModel.self , from: data)
-                    print(json)
                     Task {
                         temporaryFoodList.append(TemporaryFood(id: UUID(), name: json.C005.row.first?.PRDLST_NM ?? ""))
                         print(temporaryFoodList.count)
