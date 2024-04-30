@@ -65,6 +65,9 @@ struct RecipeSearchView: View {
                     .font(.suite(.bold, size: 16))
                     .onTapGesture {
                         tags.append(contentsOf: newTags)
+                        if !searchTitle.isEmpty {
+                            tags.append(searchTitle)
+                        }
                         dismiss()
                     }
             }
