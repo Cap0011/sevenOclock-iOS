@@ -96,7 +96,7 @@ struct RecipeView: View {
         }
         .onChange(of: tags.count) { _ in
             Task {
-                viewModel.updateFilters(foods: Array(foods), searchTags: tags)
+                viewModel.updateFilters(foods: isDateTagSelected ? Array(foods) : nil, searchTags: tags)
                 viewModel.emptyRecipes()
                 try? await viewModel.fetchRecipes()
             }
