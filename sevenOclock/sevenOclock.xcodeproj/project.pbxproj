@@ -72,12 +72,12 @@
 		C7D660BE2BD149FC00D30CFD /* FoodDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D660BD2BD149FC00D30CFD /* FoodDataModel.swift */; };
 		C7D660C12BD2066B00D30CFD /* CarBode in Frameworks */ = {isa = PBXBuildFile; productRef = C7D660C02BD2066B00D30CFD /* CarBode */; };
 		C7D660C32BD29F2800D30CFD /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D660C22BD29F2800D30CFD /* Secret.swift */; };
-		C7D660C52BDE482100D30CFD /* dummyreceipt.json in Resources */ = {isa = PBXBuildFile; fileRef = C7D660C42BDE482000D30CFD /* dummyreceipt.json */; };
 		C7D660C72BDE4A6000D30CFD /* ReceiptResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D660C62BDE4A6000D30CFD /* ReceiptResponse.swift */; };
 		C7D660C92BDE4B1200D30CFD /* ReceiptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D660C82BDE4B1200D30CFD /* ReceiptViewModel.swift */; };
 		C7D660CE2BDF688600D30CFD /* CheckItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D660CD2BDF688600D30CFD /* CheckItemView.swift */; };
 		C7D660D02BE0D3BE00D30CFD /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D660CF2BE0D3BE00D30CFD /* ImagePicker.swift */; };
 		C7D660D22BE0D91A00D30CFD /* Naver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D660D12BE0D91A00D30CFD /* Naver.swift */; };
+		C7D660D42BEFC22D00D30CFD /* dummydata.json in Resources */ = {isa = PBXBuildFile; fileRef = C7D660D32BEFC22D00D30CFD /* dummydata.json */; };
 		C7FBC2182BC6E1EC0050F9A3 /* FoodListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FBC2172BC6E1EC0050F9A3 /* FoodListView.swift */; };
 		C7FBC21A2BC7A0310050F9A3 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FBC2192BC7A0310050F9A3 /* Toast.swift */; };
 /* End PBXBuildFile section */
@@ -122,12 +122,12 @@
 		C7BFA1AE2BCEBB0900480C65 /* RecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewModel.swift; sourceTree = "<group>"; };
 		C7D660BD2BD149FC00D30CFD /* FoodDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDataModel.swift; sourceTree = "<group>"; };
 		C7D660C22BD29F2800D30CFD /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
-		C7D660C42BDE482000D30CFD /* dummyreceipt.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = dummyreceipt.json; sourceTree = "<group>"; };
 		C7D660C62BDE4A6000D30CFD /* ReceiptResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptResponse.swift; sourceTree = "<group>"; };
 		C7D660C82BDE4B1200D30CFD /* ReceiptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptViewModel.swift; sourceTree = "<group>"; };
 		C7D660CD2BDF688600D30CFD /* CheckItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckItemView.swift; sourceTree = "<group>"; };
 		C7D660CF2BE0D3BE00D30CFD /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		C7D660D12BE0D91A00D30CFD /* Naver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Naver.swift; sourceTree = "<group>"; };
+		C7D660D32BEFC22D00D30CFD /* dummydata.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = dummydata.json; sourceTree = "<group>"; };
 		C7FBC2172BC6E1EC0050F9A3 /* FoodListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListView.swift; sourceTree = "<group>"; };
 		C7FBC2192BC7A0310050F9A3 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -289,7 +289,7 @@
 				C7AFB8BC2BC2E19E0023C46F /* PersistenceController.swift */,
 				C7BFA1AB2BCEB9D100480C65 /* RecipeManager.swift */,
 				C7D660C22BD29F2800D30CFD /* Secret.swift */,
-				C7D660C42BDE482000D30CFD /* dummyreceipt.json */,
+				C7D660D32BEFC22D00D30CFD /* dummydata.json */,
 				C7D660CF2BE0D3BE00D30CFD /* ImagePicker.swift */,
 			);
 			path = Helper;
@@ -400,7 +400,7 @@
 				C7BFA1732BCEB43000480C65 /* GoogleService-Info.plist in Resources */,
 				C7AFB8902BB31FD50023C46F /* SUITE-Light.otf in Resources */,
 				C7272C242BB1757C00B1397C /* Preview Assets.xcassets in Resources */,
-				C7D660C52BDE482100D30CFD /* dummyreceipt.json in Resources */,
+				C7D660D42BEFC22D00D30CFD /* dummydata.json in Resources */,
 				C7AFB88D2BB31FD50023C46F /* SUITE-Regular.otf in Resources */,
 				C7272C212BB1757C00B1397C /* Assets.xcassets in Resources */,
 				C7AFB88E2BB31FD50023C46F /* SUITE-SemiBold.otf in Resources */,

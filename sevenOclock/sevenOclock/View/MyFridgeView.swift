@@ -185,6 +185,9 @@ struct MyFridgeView: View {
                 isShowingReceiptSheet.toggle()
             }
         }
+//        .task {
+//            fetchReceiptData()
+//        }
     }
     
     var category: some View {
@@ -317,10 +320,10 @@ struct MyFridgeView: View {
     
     func fetchReceiptData() {
         // TODO: Replace dummy data to real query
-        if let url = Bundle.main.url(forResource: "dummyreceipt", withExtension: "json"),
-           let jsonData = try? Data(contentsOf: url) {
-            receiptViewModel.parseReceiptResponse(jsonData: jsonData)
-        }
+//        if let url = Bundle.main.url(forResource: "dummydata", withExtension: "json"),
+//           let jsonData = try? Data(contentsOf: url) {
+//            receiptViewModel.parseReceiptResponse(jsonData: jsonData)
+//        }
         
         // UIImage to png
         if let image = image, let data = image.pngData(), let url = URL(string: APIKey.receiptURL) {

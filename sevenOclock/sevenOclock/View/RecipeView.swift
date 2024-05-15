@@ -23,6 +23,8 @@ struct RecipeView: View {
     
     @Environment(\.dismiss) private var dismiss
     
+    @State private var filteredRecipes = [Recipe]()
+    
     var body: some View {
         NavigationView {
             ScrollView(showsIndicators: false) {
@@ -88,10 +90,14 @@ struct RecipeView: View {
             }
         }
         .onChange(of: isDateTagSelected) { newValue in
-            Task {
-                viewModel.updateFilters(foods: newValue ? Array(foods) : nil, searchTags: tags)
-                viewModel.emptyRecipes()
-                try? await viewModel.fetchRecipes()
+            if tags.isEmpty {
+                Task {
+                    viewModel.updateFilters(foods: newValue ? Array(foods) : nil, searchTags: tags)
+                    viewModel.emptyRecipes()
+                    try? await viewModel.fetchRecipes()
+                }
+            } else {
+                filterRecipes()
             }
         }
         .onChange(of: tags.count) { _ in
@@ -100,6 +106,9 @@ struct RecipeView: View {
                 viewModel.emptyRecipes()
                 try? await viewModel.fetchRecipes()
             }
+        }
+        .onChange(of: viewModel.recipes) { _ in
+            filterRecipes()
         }
     }
     
@@ -146,15 +155,18 @@ struct RecipeView: View {
         LazyVStack(spacing: 15) {
             ForEach(viewModel.recipes, id: \.ID) { recipe in
                 VStack {
-                    RecipeCard(recipe: recipe, missingIngredients: getMissingIngredients(ingredients: recipe.ingredients))
-                        .onTapGesture {
-                            Task {
-                                selectedURL = recipe.link
-                                isShowingWebView.toggle()
+                    if filteredRecipes.map({ $0.ID }).contains(recipe.ID) {
+                        RecipeCard(recipe: recipe, missingIngredients: getMissingIngredients(ingredients: recipe.ingredients))
+                            .onTapGesture {
+                                Task {
+                                    selectedURL = recipe.link
+                                    isShowingWebView.toggle()
+                                }
                             }
-                        }
+                    }
                     
-                    if recipe.ID == viewModel.recipes.last?.ID {
+//                    if recipe.ID == viewModel.recipes.last?.ID {
+                    if recipe.ID == filteredRecipes.last?.ID {
                         ProgressView()
                             .onAppear {
                                 Task {
@@ -269,6 +281,21 @@ struct RecipeView: View {
         return ingredients.filter { ingredient in
             return !subcategories.contains { subcategory in
                 return ingredient.contains(subcategory ?? "N/A")
+            }
+        }
+    }
+    
+    func filterRecipes() {
+        if !tags.isEmpty {
+            filteredRecipes = viewModel.recipes.filter{
+                for tag in tags {
+                    return $0.ingredients.contains(tag)
+                }
+                return false
+            }
+        } else {
+            if filteredRecipes.isEmpty {
+                filteredRecipes = viewModel.recipes
             }
         }
     }
