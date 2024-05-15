@@ -15,6 +15,8 @@ struct MyFridgeView: View {
     @FetchRequest(entity: Food.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Food.usebyDate, ascending: true)]) var foods: FetchedResults<Food>
     @StateObject var receiptViewModel = ReceiptViewModel()
     
+    private let maxAPICallsPerDay = 2
+    
     var filteredFoods: [Food] {
         var result = Array(foods)
         
@@ -178,16 +180,21 @@ struct MyFridgeView: View {
             }
         }
         .onChange(of: image) { newValue in
-            fetchReceiptData()
+            if canMakeAPICall() {
+                fetchReceiptData()
+            } else {
+                // TODO: Show toast message
+                print("API 호출 한도 초과")
+            }
         }
         .onChange(of: receiptViewModel.items.count) { newValue in
             if(newValue != 0) {
                 isShowingReceiptSheet.toggle()
             }
         }
-//        .task {
-//            fetchReceiptData()
-//        }
+        .task {
+            
+        }
     }
     
     var category: some View {
@@ -324,43 +331,63 @@ struct MyFridgeView: View {
 //           let jsonData = try? Data(contentsOf: url) {
 //            receiptViewModel.parseReceiptResponse(jsonData: jsonData)
 //        }
+        incrementAPICallCount()
         
         // UIImage to png
-        if let image = image, let data = image.pngData(), let url = URL(string: APIKey.receiptURL) {
-            let base64 = data.base64EncodedString()
-            let naver = Naver(version: "V2", requestID: APIKey.receiptKey, timestamp: 0, images: [NaverImage(format: "png", name: UUID().uuidString, data: base64)] )
-            
-            let encoder = JSONEncoder()
-            
-            let jsonData = try? encoder.encode(naver)
-            let jsonString = String(bytes: jsonData!, encoding: .utf8)
-
-            if let requestBody = jsonString {
-                //URLRequest 생성
-                var request = URLRequest(url: url)
-                request.httpMethod = "POST"
-                request.setValue(APIKey.receiptKey, forHTTPHeaderField: "X-OCR-SECRET")
-                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-                request.httpBody = requestBody.data(using: .utf8)
-                
-                URLSession.shared.dataTask(with: request) {
-                    (data, response, error) in
-                    if let error = error {
-                        print("Request error: ", error)
-                        return
-                    }
-                    
-                    guard let response = response as? HTTPURLResponse else { return }
-                    
-                    if response.statusCode == 200 {
-                        guard let data = data else { return }
-                        DispatchQueue.main.async {
-                            receiptViewModel.parseReceiptResponse(jsonData: data)
-                        }
-                    }
-                }.resume()
-            }
+//        if let image = image, let data = image.pngData(), let url = URL(string: APIKey.receiptURL) {
+//            let base64 = data.base64EncodedString()
+//            let naver = Naver(version: "V2", requestID: APIKey.receiptKey, timestamp: 0, images: [NaverImage(format: "png", name: UUID().uuidString, data: base64)] )
+//            
+//            let encoder = JSONEncoder()
+//            
+//            let jsonData = try? encoder.encode(naver)
+//            let jsonString = String(bytes: jsonData!, encoding: .utf8)
+//
+//            if let requestBody = jsonString {
+//                //URLRequest 생성
+//                var request = URLRequest(url: url)
+//                request.httpMethod = "POST"
+//                request.setValue(APIKey.receiptKey, forHTTPHeaderField: "X-OCR-SECRET")
+//                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+//                request.httpBody = requestBody.data(using: .utf8)
+//                
+//                URLSession.shared.dataTask(with: request) {
+//                    (data, response, error) in
+//                    if let error = error {
+//                        print("Request error: ", error)
+//                        return
+//                    }
+//                    
+//                    guard let response = response as? HTTPURLResponse else { return }
+//                    
+//                    if response.statusCode == 200 {
+//                        guard let data = data else { return }
+//                        DispatchQueue.main.async {
+//                            receiptViewModel.parseReceiptResponse(jsonData: data)
+//                        }
+//                    }
+//                }.resume()
+//            }
+//        }
+    }
+    
+    private func canMakeAPICall() -> Bool {
+        let currentDate = Date()
+        let lastCallDate = UserDefaults.standard.object(forKey: "lastAPICallDate") as? Date ?? Date.distantPast
+        let callCount = UserDefaults.standard.integer(forKey: "dailyAPICallCount")
+        
+        if Calendar.current.isDate(currentDate, inSameDayAs: lastCallDate) {
+            return callCount < maxAPICallsPerDay
+        } else {
+            UserDefaults.standard.set(0, forKey: "dailyAPICallCount")
+            UserDefaults.standard.set(currentDate, forKey: "lastAPICallDate")
+            return true
         }
+    }
+    
+    private func incrementAPICallCount() {
+        let currentCount = UserDefaults.standard.integer(forKey: "dailyAPICallCount")
+        UserDefaults.standard.set(currentCount + 1, forKey: "dailyAPICallCount")
     }
 
     func fetchBarcodeData(barcodeNumber: String) {
