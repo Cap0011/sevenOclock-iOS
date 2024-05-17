@@ -12,7 +12,7 @@ final class RecipeManager: ObservableObject {
     static let shared = RecipeManager()
     private init() { }
     
-    private let recipeCollection = Firestore.firestore().collection("recipes")
+    private let recipeCollection = Firestore.firestore().collection("recipe")
 
     func fetchRecipes(ingredients: [String], searchBy: String, lastDocument: DocumentSnapshot?) async throws -> (recipes: [Recipe], lastDocument: DocumentSnapshot?) {
         if !ingredients.isEmpty {

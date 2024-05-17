@@ -91,18 +91,30 @@ struct RecipeView: View {
         }
         .onChange(of: isDateTagSelected) { newValue in
             if tags.isEmpty {
-                Task {
-                    viewModel.updateFilters(foods: newValue ? Array(foods) : nil, searchTags: tags)
-                    viewModel.emptyRecipes()
-                    try? await viewModel.fetchRecipes()
+                if foods.count > 0 {
+                    Task {
+                        viewModel.updateFilters(foods: newValue ? (Array(foods.prefix(30)).filter({$0.subcategory != "기타"})) : nil, searchTags: tags)
+                        viewModel.emptyRecipes()
+                        try? await viewModel.fetchRecipes()
+                    }
+                } else if newValue {
+                    // TODO: Replace to toast message
+                    print("저장된 식품이 없습니다!")
+                    isDateTagSelected = false
                 }
             } else {
-                filterRecipes()
+                if foods.count > 0 {
+                    filterRecipes()
+                } else if newValue {
+                    // TODO: Replace to toast message
+                    print("저장된 식품이 없습니다!")
+                    isDateTagSelected = false
+                }
             }
         }
         .onChange(of: tags.count) { _ in
             Task {
-                viewModel.updateFilters(foods: isDateTagSelected ? Array(foods) : nil, searchTags: tags)
+                viewModel.updateFilters(foods: nil, searchTags: tags)
                 viewModel.emptyRecipes()
                 try? await viewModel.fetchRecipes()
             }
@@ -153,19 +165,16 @@ struct RecipeView: View {
     
     var recipeList: some View {
         LazyVStack(spacing: 15) {
-            ForEach(viewModel.recipes, id: \.ID) { recipe in
+            ForEach(filteredRecipes, id: \.ID) { recipe in
                 VStack {
-                    if filteredRecipes.map({ $0.ID }).contains(recipe.ID) {
-                        RecipeCard(recipe: recipe, missingIngredients: getMissingIngredients(ingredients: recipe.ingredients))
-                            .onTapGesture {
-                                Task {
-                                    selectedURL = recipe.link
-                                    isShowingWebView.toggle()
-                                }
+                    RecipeCard(recipe: recipe, missingIngredients: getMissingIngredients(ingredients: recipe.ingredients))
+                        .onTapGesture {
+                            Task {
+                                selectedURL = recipe.link
+                                isShowingWebView.toggle()
                             }
-                    }
+                        }
                     
-//                    if recipe.ID == viewModel.recipes.last?.ID {
                     if recipe.ID == filteredRecipes.last?.ID {
                         ProgressView()
                             .onAppear {
@@ -286,16 +295,16 @@ struct RecipeView: View {
     }
     
     func filterRecipes() {
-        if !tags.isEmpty {
+        filteredRecipes = viewModel.recipes
+        
+        if !tags.isEmpty && isDateTagSelected {
+            let myIngredients = foods.filter({$0.subcategory != "기타" && $0.subcategory != nil}).map({$0.subcategory})
+            
             filteredRecipes = viewModel.recipes.filter{
-                for tag in tags {
-                    return $0.ingredients.contains(tag)
+                for ingredient in myIngredients {
+                    return $0.ingredients.contains(ingredient!)
                 }
                 return false
-            }
-        } else {
-            if filteredRecipes.isEmpty {
-                filteredRecipes = viewModel.recipes
             }
         }
     }

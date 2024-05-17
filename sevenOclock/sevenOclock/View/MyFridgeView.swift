@@ -192,9 +192,6 @@ struct MyFridgeView: View {
                 isShowingReceiptSheet.toggle()
             }
         }
-        .task {
-            
-        }
     }
     
     var category: some View {
