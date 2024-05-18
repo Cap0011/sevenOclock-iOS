@@ -63,7 +63,7 @@ struct ChartView: View {
             
             currentSlices = categorySlices
         }
-        .onChange(of: title) { _ in
+        .onChange(of: title) {
             if title == "식품 유형" {
                 currentSlices = categorySlices
             } else {

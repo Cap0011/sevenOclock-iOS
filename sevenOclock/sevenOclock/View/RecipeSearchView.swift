@@ -42,9 +42,9 @@ struct RecipeSearchView: View {
             
             Spacer()
         }
-        .onChange(of: searchTitle) { title in
-            if title.last == " " {
-                newTags.append(String(title.dropLast()))
+        .onChange(of: searchTitle) {
+            if searchTitle.last == " " {
+                newTags.append(String(searchTitle.dropLast()))
                 searchTitle = ""
             }
         }

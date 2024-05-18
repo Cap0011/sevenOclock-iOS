@@ -10,6 +10,7 @@
 		C7272C1D2BB1757A00B1397C /* sevenOclockApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7272C1C2BB1757A00B1397C /* sevenOclockApp.swift */; };
 		C7272C212BB1757C00B1397C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7272C202BB1757C00B1397C /* Assets.xcassets */; };
 		C7272C242BB1757C00B1397C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7272C232BB1757C00B1397C /* Preview Assets.xcassets */; };
+		C7AF058B2BF7993A000ECD4F /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = C7AF058A2BF7993A000ECD4F /* AlertToast */; };
 		C7AFB87A2BB1C9970023C46F /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB8792BB1C9970023C46F /* SearchBar.swift */; };
 		C7AFB87D2BB255600023C46F /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB87C2BB255600023C46F /* UIApplication.swift */; };
 		C7AFB8812BB2F5D40023C46F /* MyFridgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB8802BB2F5D40023C46F /* MyFridgeView.swift */; };
@@ -148,6 +149,7 @@
 				C7BFA17E2BCEB51700480C65 /* FirebaseAppCheck in Frameworks */,
 				C7BFA17C2BCEB51700480C65 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				C7D660C12BD2066B00D30CFD /* CarBode in Frameworks */,
+				C7AF058B2BF7993A000ECD4F /* AlertToast in Frameworks */,
 				C7BFA1822BCEB51700480C65 /* FirebaseAuth in Frameworks */,
 				C7BFA1862BCEB51700480C65 /* FirebaseCrashlytics in Frameworks */,
 				C7BFA1A62BCEB51800480C65 /* FirebaseRemoteConfigSwift in Frameworks */,
@@ -349,6 +351,7 @@
 				C7BFA1A72BCEB51800480C65 /* FirebaseStorage */,
 				C7BFA1A92BCEB51800480C65 /* FirebaseStorageCombine-Community */,
 				C7D660C02BD2066B00D30CFD /* CarBode */,
+				C7AF058A2BF7993A000ECD4F /* AlertToast */,
 			);
 			productName = sevenOclock;
 			productReference = C7272C192BB1757A00B1397C /* sevenOclock.app */;
@@ -381,6 +384,7 @@
 			packageReferences = (
 				C7BFA1742BCEB51700480C65 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				C7D660BF2BD2066B00D30CFD /* XCRemoteSwiftPackageReference "CarBode-Barcode-Scanner-For-SwiftUI" */,
+				C7AF05892BF7993A000ECD4F /* XCRemoteSwiftPackageReference "AlertToast" */,
 			);
 			productRefGroup = C7272C1A2BB1757A00B1397C /* Products */;
 			projectDirPath = "";
@@ -595,7 +599,7 @@
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -632,7 +636,7 @@
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -674,6 +678,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		C7AF05892BF7993A000ECD4F /* XCRemoteSwiftPackageReference "AlertToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elai950/AlertToast.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.9;
+			};
+		};
 		C7BFA1742BCEB51700480C65 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -693,6 +705,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C7AF058A2BF7993A000ECD4F /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C7AF05892BF7993A000ECD4F /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
+		};
 		C7BFA1752BCEB51700480C65 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C7BFA1742BCEB51700480C65 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

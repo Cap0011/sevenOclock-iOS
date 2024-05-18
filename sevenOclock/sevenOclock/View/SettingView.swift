@@ -7,11 +7,15 @@
 
 import SwiftUI
 import UserNotifications
+import AlertToast
 
 struct SettingView: View {
     @Environment(\.dismiss) private var dismiss
     
     @State private var isAlarmOn = false
+    
+    @State private var isShowingOnToast = false
+    @State private var isShowingOffToast = false
 
     var body: some View {
         ZStack {
@@ -82,11 +86,18 @@ struct SettingView: View {
         .onAppear {
             isAlarmOn = UserDefaults.standard.bool(forKey: "notificationEnabled")
         }
-        .onChange(of: isAlarmOn) { newValue in
-            if newValue {
+        .toast(isPresenting: $isShowingOnToast){
+            AlertToast(displayMode: .banner(.slide), type: .complete(.green), title: "알림이 설정되었습니다.", style: .style(backgroundColor: .lightBlue, titleColor: .black, subTitleColor: .black))
+        }
+        .toast(isPresenting: $isShowingOffToast){
+            AlertToast(displayMode: .banner(.slide), type: .regular, title: "알림이 해제되었습니다.", style: .style(backgroundColor: .lightBlue, titleColor: .black, subTitleColor: .black))
+        }
+        .onChange(of: isAlarmOn) {
+            if isAlarmOn {
                 requestNotificationPermission()
             } else {
-                UserDefaults.standard.set(newValue, forKey: "notificationEnabled")
+                UserDefaults.standard.set(false, forKey: "notificationEnabled")
+                isShowingOffToast.toggle()
             }
         }
         .toolbar {
@@ -108,8 +119,8 @@ struct SettingView: View {
     func requestNotificationPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {
-                print("알림 권한이 허용되었습니다.")
                 UserDefaults.standard.set(true, forKey: "notificationEnabled")
+                isShowingOnToast.toggle()
             } else if let error = error {
                 print(error.localizedDescription)
             }

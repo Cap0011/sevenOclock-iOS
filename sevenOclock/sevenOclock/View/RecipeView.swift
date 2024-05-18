@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AlertToast
 
 struct RecipeView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
@@ -24,6 +25,8 @@ struct RecipeView: View {
     @Environment(\.dismiss) private var dismiss
     
     @State private var filteredRecipes = [Recipe]()
+    
+    @State var isShowingToast = false
     
     var body: some View {
         NavigationView {
@@ -76,50 +79,51 @@ struct RecipeView: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-            .onChange(of: selectedURL) { _ in
+            .onChange(of: selectedURL) {
                 print(selectedURL)
             }
         }
         .task {
             try? await viewModel.fetchRecipes()
         }
-        .onChange(of: viewModel.selectedSortOption) { _ in
+        .toast(isPresenting: $isShowingToast){
+            AlertToast(displayMode: .banner(.slide), type: .error(.red), title: "저장된 식품이 없습니다.", style: .style(backgroundColor: .lightBlue, titleColor: .black, subTitleColor: .black))
+        }
+        .onChange(of: viewModel.selectedSortOption) {
             Task {
                 viewModel.emptyRecipes()
                 try? await viewModel.fetchRecipes()
             }
         }
-        .onChange(of: isDateTagSelected) { newValue in
+        .onChange(of: isDateTagSelected) {
             if tags.isEmpty {
                 if foods.count > 0 {
                     Task {
-                        viewModel.updateFilters(foods: newValue ? (Array(foods.prefix(30)).filter({$0.subcategory != "기타"})) : nil, searchTags: tags)
+                        viewModel.updateFilters(foods: isDateTagSelected ? (Array(foods.prefix(30)).filter({$0.subcategory != "기타"})) : nil, searchTags: tags)
                         viewModel.emptyRecipes()
                         try? await viewModel.fetchRecipes()
                     }
-                } else if newValue {
-                    // TODO: Replace to toast message
-                    print("저장된 식품이 없습니다!")
+                } else if isDateTagSelected {
                     isDateTagSelected = false
+                    isShowingToast.toggle()
                 }
             } else {
                 if foods.count > 0 {
                     filterRecipes()
-                } else if newValue {
-                    // TODO: Replace to toast message
-                    print("저장된 식품이 없습니다!")
+                } else if isDateTagSelected {
                     isDateTagSelected = false
+                    isShowingToast.toggle()
                 }
             }
         }
-        .onChange(of: tags.count) { _ in
+        .onChange(of: tags.count) {
             Task {
                 viewModel.updateFilters(foods: nil, searchTags: tags)
                 viewModel.emptyRecipes()
                 try? await viewModel.fetchRecipes()
             }
         }
-        .onChange(of: viewModel.recipes) { _ in
+        .onChange(of: viewModel.recipes) {
             filterRecipes()
         }
     }

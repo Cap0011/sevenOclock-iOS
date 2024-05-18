@@ -8,6 +8,7 @@
 import SwiftUI
 import CarBode
 import AVFoundation
+import AlertToast
 
 struct MyFridgeView: View {
     @Environment(\.scenePhase) var scenePhase
@@ -16,6 +17,14 @@ struct MyFridgeView: View {
     @StateObject var receiptViewModel = ReceiptViewModel()
     
     private let maxAPICallsPerDay = 2
+    
+    @State var isShowingAddedToast = false
+    @State var isShowingCountUpdatedToast = false
+    @State var isShowingDeletedToast = false
+    @State var isShowingCountInputErrorToast = false
+    @State var isShowingOCRErrorToast = false
+    @State var isShowingOCRLimitToast = false
+    @State var isShowingBarcodeErrorToast = false
     
     var filteredFoods: [Food] {
         var result = Array(foods)
@@ -91,7 +100,6 @@ struct MyFridgeView: View {
             }
             .confirmationDialog("Add", isPresented: $isShowingAddConfirmation) {
                 Button("영수증 촬영") {
-                    // TODO: 영수증 촬영
                     isShowingCameraSheet.toggle()
                 }
                 Button("바코드 인식") {
@@ -133,24 +141,47 @@ struct MyFridgeView: View {
                     .autocorrectionDisabled()
                     
                 Button("확인", action: {
-                    // TODO: Update selectedFood count
                     if let count = Int(inputText) {
                         if let object = foods.first(where: { $0.id == selectedFood?.id }) {
                             if count >= object.count {
                                 // Delete
                                 managedObjectContext.delete(object)
                                 saveContext()
+                                isShowingDeletedToast.toggle()
                             } else {
                                 // Update count property
                                 object.count -= Int64(count)
                                 updateFood(data: object)
+                                isShowingCountUpdatedToast.toggle()
                             }
                         }
                     } else {
                         // TODO: Show toast message
+                        isShowingCountInputErrorToast.toggle()
                     }
                 })
                 Button("취소", role: .cancel, action: {})
+            }
+            .toast(isPresenting: $isShowingAddedToast){
+                AlertToast(displayMode: .banner(.slide), type: .complete(.green), title: "식품이 추가되었습니다.", style: .style(backgroundColor: .lightBlue, titleColor: .black, subTitleColor: .black))
+            }
+            .toast(isPresenting: $isShowingDeletedToast){
+                AlertToast(displayMode: .banner(.slide), type: .regular, title: "식품이 삭제되었습니다.", style: .style(backgroundColor: .lightBlue, titleColor: .black, subTitleColor: .black))
+            }
+            .toast(isPresenting: $isShowingCountUpdatedToast){
+                AlertToast(displayMode: .banner(.slide), type: .regular, title: "식품 수량이 수정되었습니다.", style: .style(backgroundColor: .lightBlue, titleColor: .black, subTitleColor: .black))
+            }
+            .toast(isPresenting: $isShowingCountInputErrorToast){
+                AlertToast(displayMode: .banner(.slide), type: .error(.red), title: "잘못된 입력입니다", style: .style(backgroundColor: .lightBlue, titleColor: .black, subTitleColor: .black))
+            }
+            .toast(isPresenting: $isShowingOCRLimitToast){
+                AlertToast(displayMode: .banner(.slide), type: .error(.red), title: "영수증 입력 일일 호출 횟수를 초과했습니다.", style: .style(backgroundColor: .lightBlue, titleColor: .black, subTitleColor: .black))
+            }
+            .toast(isPresenting: $isShowingBarcodeErrorToast){
+                AlertToast(displayMode: .banner(.slide), type: .error(.red), title: "해당하는 데이터가 없습니다.", style: .style(backgroundColor: .lightBlue, titleColor: .black, subTitleColor: .black))
+            }
+            .toast(isPresenting: $isShowingOCRErrorToast){
+                AlertToast(displayMode: .banner(.slide), type: .error(.red), title: "영수증 인식에 실패했습니다.", style: .style(backgroundColor: .lightBlue, titleColor: .black, subTitleColor: .black))
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -171,25 +202,31 @@ struct MyFridgeView: View {
             }
             .navigationBarTitleDisplayMode(.inline)
         }
-        .onChange(of: scenePhase) { newPhase in
-            if newPhase == .background {
+        .onChange(of: scenePhase) {
+            if scenePhase == .background {
                 UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
                 if UserDefaults.standard.bool(forKey: "notificationEnabled") {
                     scheduleNotification()
                 }
             }
         }
-        .onChange(of: image) { newValue in
+        .onChange(of: image) {
             if canMakeAPICall() {
                 fetchReceiptData()
             } else {
                 // TODO: Show toast message
                 print("API 호출 한도 초과")
+                isShowingOCRLimitToast.toggle()
             }
         }
-        .onChange(of: receiptViewModel.items.count) { newValue in
-            if(newValue != 0) {
+        .onChange(of: receiptViewModel.items.count) {
+            if(receiptViewModel.items.count != 0) {
                 isShowingReceiptSheet.toggle()
+            }
+        }
+        .onChange(of: foods.count) { oldValue, newValue in
+            if oldValue < newValue {
+                isShowingAddedToast.toggle()
             }
         }
     }
@@ -330,42 +367,48 @@ struct MyFridgeView: View {
 //        }
         incrementAPICallCount()
         
-        // UIImage to png
-//        if let image = image, let data = image.pngData(), let url = URL(string: APIKey.receiptURL) {
-//            let base64 = data.base64EncodedString()
-//            let naver = Naver(version: "V2", requestID: APIKey.receiptKey, timestamp: 0, images: [NaverImage(format: "png", name: UUID().uuidString, data: base64)] )
-//            
-//            let encoder = JSONEncoder()
-//            
-//            let jsonData = try? encoder.encode(naver)
-//            let jsonString = String(bytes: jsonData!, encoding: .utf8)
-//
-//            if let requestBody = jsonString {
-//                //URLRequest 생성
-//                var request = URLRequest(url: url)
-//                request.httpMethod = "POST"
-//                request.setValue(APIKey.receiptKey, forHTTPHeaderField: "X-OCR-SECRET")
-//                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-//                request.httpBody = requestBody.data(using: .utf8)
-//                
-//                URLSession.shared.dataTask(with: request) {
-//                    (data, response, error) in
-//                    if let error = error {
-//                        print("Request error: ", error)
-//                        return
-//                    }
-//                    
-//                    guard let response = response as? HTTPURLResponse else { return }
-//                    
-//                    if response.statusCode == 200 {
-//                        guard let data = data else { return }
-//                        DispatchQueue.main.async {
-//                            receiptViewModel.parseReceiptResponse(jsonData: data)
-//                        }
-//                    }
-//                }.resume()
-//            }
-//        }
+        if let image = image, let data = image.pngData(), let url = URL(string: APIKey.receiptURL) {
+            let base64 = data.base64EncodedString()
+            let naver = Naver(version: "V2", requestID: APIKey.receiptKey, timestamp: 0, images: [NaverImage(format: "png", name: UUID().uuidString, data: base64)] )
+            
+            let encoder = JSONEncoder()
+            
+            let jsonData = try? encoder.encode(naver)
+            let jsonString = String(bytes: jsonData!, encoding: .utf8)
+
+            if let requestBody = jsonString {
+                //URLRequest 생성
+                var request = URLRequest(url: url)
+                request.httpMethod = "POST"
+                request.setValue(APIKey.receiptKey, forHTTPHeaderField: "X-OCR-SECRET")
+                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.httpBody = requestBody.data(using: .utf8)
+                
+                URLSession.shared.dataTask(with: request) {
+                    (data, response, error) in
+                    if let error = error {
+                        print("Request error: ", error)
+                        isShowingOCRErrorToast.toggle()
+                        return
+                    }
+                    
+                    guard let response = response as? HTTPURLResponse else {
+                        isShowingOCRErrorToast.toggle()
+                        return
+                    }
+                    
+                    if response.statusCode == 200 {
+                        guard let data = data else {
+                            isShowingOCRErrorToast.toggle()
+                            return
+                        }
+                        DispatchQueue.main.async {
+                            receiptViewModel.parseReceiptResponse(jsonData: data)
+                        }
+                    }
+                }.resume()
+            }
+        }
     }
     
     private func canMakeAPICall() -> Bool {
@@ -394,16 +437,20 @@ struct MyFridgeView: View {
             URLSession.shared.dataTask(with: request) {
                 (data, response, error) in guard let data = data else {return}
                 let decoder = JSONDecoder()
-                print(response as Any)
                 do {
                     let json = try decoder.decode(FoodDataModel.self , from: data)
-                    Task {
-                        temporaryFoodList.append(TemporaryFood(id: UUID(), name: json.C005.row.first?.PRDLST_NM ?? ""))
-                        print(temporaryFoodList.count)
-                        isShowingAddSheet.toggle()
+                    if let row = json.C005.row {
+                        Task {
+                            temporaryFoodList.append(TemporaryFood(id: UUID(), name: row.first?.PRDLST_NM ?? ""))
+                            print(temporaryFoodList.count)
+                            isShowingAddSheet.toggle()
+                        }
+                    } else {
+                        isShowingBarcodeErrorToast.toggle()
                     }
                 }
                 catch {
+                    isShowingBarcodeErrorToast.toggle()
                     print(error)
                 }
             }.resume()

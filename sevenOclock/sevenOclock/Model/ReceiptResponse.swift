@@ -57,7 +57,7 @@ struct PaymentInfo: Codable {
 struct DateElement: Codable {
     let text: String?
     let formatted: DateFormatted?
-    let keyText: DateKeyText?
+    let keyText: String?
     let confidenceScore: Double?
     let boundingPolys: [BoundingPoly]?
 //    let maskingPolys: [JSONAny]?
@@ -76,13 +76,6 @@ struct Vertex: Codable {
 // MARK: - DateFormatted
 struct DateFormatted: Codable {
     let year, month, day, value: String?
-}
-
-enum DateKeyText: String, Codable {
-    case empty = ""
-    case 이벤트할인 = "이벤트 할인"
-    case 전화 = "전화"
-    case 총할인액 = "총할인액"
 }
 
 // MARK: - Time
@@ -112,7 +105,7 @@ struct StoreInfo: Codable {
 struct BizNum: Codable {
     let text: String?
     let formatted: BizNumFormatted?
-    let keyText: BizNumKeyText?
+    let keyText: String?
     let confidenceScore: Double?
     let boundingPolys: [BoundingPoly]?
 //    let maskingPolys: [JSONAny]?
@@ -121,12 +114,6 @@ struct BizNum: Codable {
 // MARK: - BizNumFormatted
 struct BizNumFormatted: Codable {
     let value: String?
-}
-
-enum BizNumKeyText: String, Codable {
-    case empty = ""
-    case 주소 = "주소"
-    case 총구매액 = "총구매액"
 }
 
 // MARK: - SubResult

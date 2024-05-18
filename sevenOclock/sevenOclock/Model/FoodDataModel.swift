@@ -12,7 +12,7 @@ struct FoodDataModel: Codable {
 
     struct FoodData: Codable {
         let total_count: String
-        let row: [Product]
+        let row: [Product]?
         let RESULT: Result
 
         struct Product: Codable {

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AlertToast
 
 struct AddFoodView: View {
     @Environment(\.dismiss) private var dismiss
@@ -34,6 +35,9 @@ struct AddFoodView: View {
             }
             .onDisappear {
                 foodList = []
+            }
+            .toast(isPresenting: $isShowingToast){
+                AlertToast(displayMode: .banner(.slide), type: .error(.red), title: "식품 이름을 입력해주세요.", style: .style(backgroundColor: .lightBlue, titleColor: .black, subTitleColor: .black))
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -137,8 +141,8 @@ struct AddFoodView: View {
             .padding(.top, 15)
             .padding(.bottom, 20)
             .background(RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/).foregroundStyle(.lightBlue))
-            .onChange(of: food.category) { category in
-                food.subcategory = Category.fromRawValue(rawValue: category)?.getSubcategories().first ?? ""
+            .onChange(of: food.category) {
+                food.subcategory = Category.fromRawValue(rawValue: food.category)?.getSubcategories().first ?? ""
             }
         }
         
@@ -201,7 +205,7 @@ struct AddFoodView: View {
             }
             .foregroundStyle(.grey0)
             .font(.suite(.regular, size: 15))
-            .onChange(of: isFocused) { _ in
+            .onChange(of: isFocused) {
                 isFinished = !isFocused
             }
         }
