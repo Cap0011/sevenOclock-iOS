@@ -58,14 +58,7 @@ struct RecipeView: View {
                 }
             }
             .sheet(isPresented: $isShowingWebView) {
-                WebView(url: selectedURL)
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            Button("취소") {
-                                dismiss()
-                            }
-                        }
-                    }
+                WebViewContainer(url: selectedURL)
             }
             .toolbar {
                 ToolbarItem(placement: .principal) {
@@ -79,15 +72,12 @@ struct RecipeView: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-            .onChange(of: selectedURL) {
-                print(selectedURL)
-            }
         }
         .task {
             try? await viewModel.fetchRecipes()
         }
         .toast(isPresenting: $isShowingToast){
-            AlertToast(displayMode: .banner(.slide), type: .error(.red), title: "저장된 식품이 없습니다.", style: .style(backgroundColor: .lightBlue, titleColor: .black, subTitleColor: .black))
+            AlertToast(displayMode: .banner(.slide), type: .error(.red), title: "기한 임박 식품이 없습니다.", style: .style(backgroundColor: .lightBlue, titleColor: .black, subTitleColor: .black))
         }
         .onChange(of: viewModel.selectedSortOption) {
             Task {
@@ -96,10 +86,11 @@ struct RecipeView: View {
             }
         }
         .onChange(of: isDateTagSelected) {
+            print(getUrgentIngredients())
             if tags.isEmpty {
-                if foods.count > 0 {
+                if getUrgentIngredients().count > 0 {
                     Task {
-                        viewModel.updateFilters(foods: isDateTagSelected ? (Array(foods.prefix(30)).filter({$0.subcategory != "기타"})) : nil, searchTags: tags)
+                        viewModel.updateFilters(foods: isDateTagSelected ? getUrgentIngredients() : nil, searchTags: tags)
                         viewModel.emptyRecipes()
                         try? await viewModel.fetchRecipes()
                     }
@@ -108,7 +99,7 @@ struct RecipeView: View {
                     isShowingToast.toggle()
                 }
             } else {
-                if foods.count > 0 {
+                if getUrgentIngredients().count > 0 {
                     filterRecipes()
                 } else if isDateTagSelected {
                     isDateTagSelected = false
@@ -140,7 +131,7 @@ struct RecipeView: View {
                     .padding(.leading, 10)
                     .opacity(0.8)
                 
-                Text("검색할 재료, 레시피를 입력하세요")
+                Text("검색할 재료를 입력하세요")
             }
         }
         .foregroundStyle(.grey0.opacity(0.8))
@@ -311,6 +302,10 @@ struct RecipeView: View {
                 return false
             }
         }
+    }
+    
+    func getUrgentIngredients() -> [Food] {
+        return foods.filter { ($0.subcategory != nil) && $0.subcategory != "기타" && $0.usebyDate!.daysLeft() <= 3 }
     }
 }
 

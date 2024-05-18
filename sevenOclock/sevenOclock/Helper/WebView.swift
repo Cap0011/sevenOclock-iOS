@@ -28,3 +28,18 @@ struct WebView: UIViewRepresentable {
         webView.load(URLRequest(url: url))
     }
 }
+
+struct WebViewContainer: View {
+    let url: String
+    @Environment(\.dismiss) var dismiss
+
+    var body: some View {
+        NavigationView {
+            WebView(url: url)
+                .navigationBarItems(leading: Button("닫기") {
+                    dismiss()
+                })
+                .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+}

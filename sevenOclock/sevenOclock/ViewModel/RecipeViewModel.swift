@@ -23,9 +23,8 @@ final class RecipeViewModel: ObservableObject {
     
     func updateFilters(foods: [Food]?, searchTags: [String]) {
         selectedFilters = []
-        if let foods {
-            let subcategories: Set<String> = Set(foods.filter { ($0.subcategory != nil) && $0.subcategory != "기타" && $0.usebyDate!.daysLeft() < 3 }.map { $0.subcategory! })
-            self.selectedFilters.append(contentsOf: Array(subcategories))
+        if let foods = foods {
+            self.selectedFilters.append(contentsOf: Array(Set(foods.map { $0.subcategory ?? "" })))
         }
         
         self.selectedFilters.append(contentsOf: searchTags)
