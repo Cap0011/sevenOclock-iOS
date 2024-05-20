@@ -12,7 +12,7 @@ import AlertToast
 struct SettingView: View {
     @Environment(\.dismiss) private var dismiss
     
-    @State private var isAlarmOn = false
+    @State private var isAlarmOn = UserDefaults.standard.bool(forKey: "notificationEnabled")
     
     @State private var isShowingOnToast = false
     @State private var isShowingOffToast = false
@@ -37,45 +37,24 @@ struct SettingView: View {
                     .padding(.top, 10)
                     .padding(.leading, 5)
                 
-                ZStack {
-                    RoundedRectangle(cornerRadius: 10.0)
-                        .foregroundStyle(.white)
-                        .frame(height: 48)
-                    
-                    HStack {
-                        Text("라이센스")
+                Link(destination: URL(string: "https://github.com/2024-Capstone-Design-MORSE/sevenOclock-iOS/blob/main/Privacy%20Policy.md")!) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 10.0)
+                            .foregroundStyle(.white)
+                            .frame(height: 48)
                         
-                        Spacer()
-                        
-                        Image(systemName: "chevron.forward")
-                            .foregroundStyle(.grey0)
+                        HStack {
+                            Text("개인정보 처리 방침")
+                            
+                            Spacer()
+                            
+                            Image(systemName: "chevron.forward")
+                                .foregroundStyle(.grey0)
+                        }
+                        .padding(.horizontal, 15)
                     }
-                    .padding(.horizontal, 15)
-                    .onTapGesture {
-                        // TODO: Show license information
-                    }
+                    .padding(.top, 40)
                 }
-                .padding(.top, 30)
-                
-                ZStack {
-                    RoundedRectangle(cornerRadius: 10.0)
-                        .foregroundStyle(.white)
-                        .frame(height: 48)
-                    
-                    HStack {
-                        Text("개인정보 처리 방침")
-                        
-                        Spacer()
-                        
-                        Image(systemName: "chevron.forward")
-                            .foregroundStyle(.grey0)
-                    }
-                    .padding(.horizontal, 15)
-                    .onTapGesture {
-                        // TODO: Show privacy policy information
-                    }
-                }
-                .padding(.top, 15)
                 
                 Spacer()
             }
@@ -84,7 +63,7 @@ struct SettingView: View {
             .padding(.top, 25)
         }
         .onAppear {
-            isAlarmOn = UserDefaults.standard.bool(forKey: "notificationEnabled")
+//            isAlarmOn = UserDefaults.standard.bool(forKey: "notificationEnabled")
         }
         .toast(isPresenting: $isShowingOnToast){
             AlertToast(displayMode: .banner(.slide), type: .complete(.green), title: "알림이 설정되었습니다.", style: .style(backgroundColor: .lightBlue, titleColor: .black, subTitleColor: .black))

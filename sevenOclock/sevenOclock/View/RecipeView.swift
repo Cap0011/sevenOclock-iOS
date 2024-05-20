@@ -7,6 +7,7 @@
 
 import SwiftUI
 import AlertToast
+import CachedAsyncImage
 
 struct RecipeView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
@@ -192,15 +193,20 @@ struct RecipeView: View {
             HStack(alignment: .bottom, spacing: 10) {
                 ZStack(alignment: .topTrailing) {
                     if let url = URL(string: recipe.imageURL) {
-                        AsyncImage(url: url) { image in
-                            image.resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 100, height: 100)
-                                .clipShape(RoundedRectangle(cornerRadius: 5))
-                        } placeholder: {
-                            RoundedRectangle(cornerRadius: 5)
-                                .frame(width: 100, height: 100)
-                                .foregroundStyle(.grey1)
+                        CachedAsyncImage(url: url, transaction: Transaction(animation: .easeInOut)) { phase in
+                            switch phase {
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 100, height: 100)
+                                    .clipShape(RoundedRectangle(cornerRadius: 5))
+                            default:
+                                RoundedRectangle(cornerRadius: 5)
+                                    .frame(width: 100, height: 100)
+                                    .foregroundStyle(.grey1)
+                                    .opacity(0.5)
+                            }
                         }
                     } else {
                         RoundedRectangle(cornerRadius: 5)

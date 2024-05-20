@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C70B395B2BFB826400C0580F /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = C70B395A2BFB826400C0580F /* CachedAsyncImage */; };
 		C7272C1D2BB1757A00B1397C /* sevenOclockApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7272C1C2BB1757A00B1397C /* sevenOclockApp.swift */; };
 		C7272C212BB1757C00B1397C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7272C202BB1757C00B1397C /* Assets.xcassets */; };
 		C7272C242BB1757C00B1397C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7272C232BB1757C00B1397C /* Preview Assets.xcassets */; };
@@ -157,6 +158,7 @@
 				C7BFA1AA2BCEB51800480C65 /* FirebaseStorageCombine-Community in Frameworks */,
 				C7BFA1A42BCEB51800480C65 /* FirebaseRemoteConfig in Frameworks */,
 				C7BFA1802BCEB51700480C65 /* FirebaseAppDistribution-Beta in Frameworks */,
+				C70B395B2BFB826400C0580F /* CachedAsyncImage in Frameworks */,
 				C7BFA1842BCEB51700480C65 /* FirebaseAuthCombine-Community in Frameworks */,
 				C7BFA1A22BCEB51800480C65 /* FirebasePerformance in Frameworks */,
 				C7BFA19A2BCEB51800480C65 /* FirebaseInAppMessagingSwift-Beta in Frameworks */,
@@ -349,6 +351,7 @@
 				C7BFA1A92BCEB51800480C65 /* FirebaseStorageCombine-Community */,
 				C7D660C02BD2066B00D30CFD /* CarBode */,
 				C7AF058A2BF7993A000ECD4F /* AlertToast */,
+				C70B395A2BFB826400C0580F /* CachedAsyncImage */,
 			);
 			productName = sevenOclock;
 			productReference = C7272C192BB1757A00B1397C /* sevenOclock.app */;
@@ -382,6 +385,7 @@
 				C7BFA1742BCEB51700480C65 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				C7D660BF2BD2066B00D30CFD /* XCRemoteSwiftPackageReference "CarBode-Barcode-Scanner-For-SwiftUI" */,
 				C7AF05892BF7993A000ECD4F /* XCRemoteSwiftPackageReference "AlertToast" */,
+				C70B39592BFB826400C0580F /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 			);
 			productRefGroup = C7272C1A2BB1757A00B1397C /* Products */;
 			projectDirPath = "";
@@ -678,6 +682,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		C70B39592BFB826400C0580F /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-cached-async-image";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.1;
+			};
+		};
 		C7AF05892BF7993A000ECD4F /* XCRemoteSwiftPackageReference "AlertToast" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/elai950/AlertToast.git";
@@ -705,6 +717,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C70B395A2BFB826400C0580F /* CachedAsyncImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C70B39592BFB826400C0580F /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
+			productName = CachedAsyncImage;
+		};
 		C7AF058A2BF7993A000ECD4F /* AlertToast */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C7AF05892BF7993A000ECD4F /* XCRemoteSwiftPackageReference "AlertToast" */;
