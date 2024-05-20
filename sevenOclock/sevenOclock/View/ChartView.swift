@@ -32,8 +32,14 @@ struct ChartView: View {
                     header
                         .padding(.top, 20)
                     
-                    chart
-                        .padding(.top, 30)
+                    if foods.count > 0 {
+                        chart
+                            .padding(.top, 30)
+                    } else {
+                        Text("저장된 식품이 없습니다.")
+                            .font(.suite(.semibold, size: 20))
+                            .padding(.top, 100)
+                    }
                     
                     Spacer()
                 }

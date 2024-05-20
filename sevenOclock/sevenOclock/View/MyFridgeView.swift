@@ -11,8 +11,15 @@ import AVFoundation
 import AlertToast
 
 struct MyFridgeView: View {
+    init? () {
+        let scenes = UIApplication.shared.connectedScenes
+        guard let scene = scenes.first as? UIWindowScene else { return nil }
+        scene.keyWindow?.overrideUserInterfaceStyle = .light
+    }
+    
     @Environment(\.scenePhase) var scenePhase
     @Environment(\.managedObjectContext) var managedObjectContext
+    @Environment(\.dismiss) var dismiss
     @FetchRequest(entity: Food.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Food.usebyDate, ascending: true)]) var foods: FetchedResults<Food>
     @StateObject var receiptViewModel = ReceiptViewModel()
     
@@ -93,10 +100,21 @@ struct MyFridgeView: View {
                     .padding(.horizontal, 25)
                     .padding(.top, 15)
                 
-                FoodGridView(foods: filteredFoods, backgroundColour: Color.blue, preservation: selectedPreservation, isShowingAlert: $isShowingAlert, inputText: $inputText, selectedFood: $selectedFood)
-                    .padding(.horizontal, 20)
-                    .padding(.top, 10)
-                    .padding(.bottom, 15)
+                if foods.count > 0 {
+                    FoodGridView(foods: filteredFoods, backgroundColour: Color.blue, preservation: selectedPreservation, isShowingAlert: $isShowingAlert, inputText: $inputText, selectedFood: $selectedFood)
+                        .padding(.horizontal, 20)
+                        .padding(.top, 10)
+                        .padding(.bottom, 15)
+                } else {
+                    HStack {
+                        Spacer()
+                        Text("저장된 식품이 없습니다.")
+                            .font(.suite(.semibold, size: 20))
+                            .padding(.top, 100)
+                        Spacer()
+                    }
+                    Spacer()
+                }
             }
             .confirmationDialog("Add", isPresented: $isShowingAddConfirmation) {
                 Button("영수증 촬영") {
@@ -122,14 +140,19 @@ struct MyFridgeView: View {
                 ImagePicker(sourceType: .camera, selectedImage: self.$image)
             }
             .sheet(isPresented: $isShowingScanner) {
-                CBScanner(
-                    supportBarcode: .constant([.qr, .ean13]),
-                    scanInterval: .constant(5.0)
-                ){
-                    isShowingScanner = false
-                    fetchBarcodeData(barcodeNumber: $0.value)
-                } onDraw: {
-                    $0.draw(lineWidth: 2, lineColor: UIColor.orange, fillColor: UIColor(red: 0, green: 0, blue: 0.2, alpha: 0.4))
+                NavigationView {
+                    CBScanner(
+                        supportBarcode: .constant([.qr, .ean13]),
+                        scanInterval: .constant(5.0)
+                    ){
+                        isShowingScanner = false
+                        fetchBarcodeData(barcodeNumber: $0.value)
+                    } onDraw: {
+                        $0.draw(lineWidth: 2, lineColor: UIColor.orange, fillColor: UIColor(red: 0, green: 0, blue: 0.2, alpha: 0.4))
+                    }
+                    .navigationBarItems(trailing: Button("닫기") {
+                        isShowingScanner = false
+                    })
                 }
             }
             .sheet(isPresented: $isShowingReceiptSheet) {
@@ -156,7 +179,6 @@ struct MyFridgeView: View {
                             }
                         }
                     } else {
-                        // TODO: Show toast message
                         isShowingCountInputErrorToast.toggle()
                     }
                 })
@@ -202,6 +224,9 @@ struct MyFridgeView: View {
             }
             .navigationBarTitleDisplayMode(.inline)
         }
+        .onAppear {
+            receiptViewModel.items = []
+        }
         .onChange(of: scenePhase) {
             if scenePhase == .background {
                 UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
@@ -214,7 +239,6 @@ struct MyFridgeView: View {
             if canMakeAPICall() {
                 fetchReceiptData()
             } else {
-                // TODO: Show toast message
                 print("API 호출 한도 초과")
                 isShowingOCRLimitToast.toggle()
             }
@@ -279,7 +303,7 @@ struct MyFridgeView: View {
         @Binding var isShowingAlert: Bool
         @Binding var inputText: String
         @Binding var selectedFood: Food?
-                        
+        
         var body: some View {
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVGrid(columns: layout) {
@@ -360,7 +384,6 @@ struct MyFridgeView: View {
     }
     
     func fetchReceiptData() {
-        // TODO: Replace dummy data to real query
 //        if let url = Bundle.main.url(forResource: "dummydata", withExtension: "json"),
 //           let jsonData = try? Data(contentsOf: url) {
 //            receiptViewModel.parseReceiptResponse(jsonData: jsonData)
