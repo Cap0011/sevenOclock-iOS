@@ -69,7 +69,7 @@ struct MyFridgeView: View {
     @State var isShowingAddSheet = false
     @State var isShowingScanner = false
     
-    @State private var image: UIImage?
+    @State private var image = UIImage()
     @State var isShowingCameraSheet = false
     
     @State var selectedFood: Food?
@@ -118,7 +118,11 @@ struct MyFridgeView: View {
             }
             .confirmationDialog("Add", isPresented: $isShowingAddConfirmation) {
                 Button("영수증 촬영") {
-                    isShowingCameraSheet.toggle()
+                    if canMakeAPICall() {
+                        isShowingCameraSheet.toggle()
+                    } else {
+                        isShowingOCRLimitToast.toggle()
+                    }
                 }
                 Button("바코드 인식") {
                     isShowingScanner.toggle()
@@ -388,9 +392,10 @@ struct MyFridgeView: View {
 //           let jsonData = try? Data(contentsOf: url) {
 //            receiptViewModel.parseReceiptResponse(jsonData: jsonData)
 //        }
+
         incrementAPICallCount()
         
-        if let image = image, let data = image.pngData(), let url = URL(string: APIKey.receiptURL) {
+        if let data = image.pngData(), let url = URL(string: APIKey.receiptURL) {
             let base64 = data.base64EncodedString()
             let naver = Naver(version: "V2", requestID: APIKey.receiptKey, timestamp: 0, images: [NaverImage(format: "png", name: UUID().uuidString, data: base64)] )
             
@@ -409,24 +414,33 @@ struct MyFridgeView: View {
                 
                 URLSession.shared.dataTask(with: request) {
                     (data, response, error) in
-                    if let error = error {
-                        print("Request error: ", error)
-                        isShowingOCRErrorToast.toggle()
-                        return
-                    }
-                    
-                    guard let response = response as? HTTPURLResponse else {
-                        isShowingOCRErrorToast.toggle()
-                        return
-                    }
-                    
-                    if response.statusCode == 200 {
-                        guard let data = data else {
+                    DispatchQueue.main.async {
+                        if let error = error {
+                            print("Request error: ", error)
                             isShowingOCRErrorToast.toggle()
                             return
                         }
-                        DispatchQueue.main.async {
-                            receiptViewModel.parseReceiptResponse(jsonData: data)
+                        
+                        guard let response = response as? HTTPURLResponse else {
+                            isShowingOCRErrorToast.toggle()
+                            return
+                        }
+                        
+                        if response.statusCode == 200 {
+                            guard let data = data else {
+                                isShowingOCRErrorToast.toggle()
+                                return
+                            }
+                            DispatchQueue.main.async {
+                                receiptViewModel.parseReceiptResponse(jsonData: data)
+                                if receiptViewModel.items.count == 0 {
+                                    isShowingOCRErrorToast.toggle()
+                                    return
+                                }
+                            }
+                        } else {
+                            isShowingOCRErrorToast.toggle()
+                            return
                         }
                     }
                 }.resume()
