@@ -117,13 +117,13 @@ struct MyFridgeView: View {
                 }
             }
             .confirmationDialog("Add", isPresented: $isShowingAddConfirmation) {
-                Button("영수증 촬영") {
-                    if canMakeAPICall() {
-                        isShowingCameraSheet.toggle()
-                    } else {
-                        isShowingOCRLimitToast.toggle()
-                    }
-                }
+//                Button("영수증 촬영") {
+//                    if canMakeAPICall() {
+//                        isShowingCameraSheet.toggle()
+//                    } else {
+//                        isShowingOCRLimitToast.toggle()
+//                    }
+//                }
                 Button("바코드 인식") {
                     isShowingScanner.toggle()
                 }
