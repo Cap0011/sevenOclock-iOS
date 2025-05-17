@@ -19,6 +19,13 @@ struct AddFoodView: View {
         NavigationView {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
+                    itemAddButton
+                        .padding(.horizontal, 20)
+                        .padding(.bottom, 30)
+                        .onTapGesture {
+                            foodList.append(TemporaryFood(id: UUID()))
+                        }
+                    
                     ForEach($foodList, id: \.self) { $food in
                         FoodInputCard(food: food, list: $foodList)
                             .font(.suite(.bold, size: 15))
@@ -68,6 +75,18 @@ struct AddFoodView: View {
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden()
+        }
+    }
+    
+    var itemAddButton: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 25)
+                .foregroundStyle(.lightBlue)
+                .frame(height: 44)
+            
+            Text("식품 추가")
+                .font(.suite(.semibold, size: 18))
+                .foregroundStyle(.black)
         }
     }
     
