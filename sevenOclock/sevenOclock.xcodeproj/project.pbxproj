@@ -11,6 +11,8 @@
 		C7272C1D2BB1757A00B1397C /* sevenOclockApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7272C1C2BB1757A00B1397C /* sevenOclockApp.swift */; };
 		C7272C212BB1757C00B1397C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7272C202BB1757C00B1397C /* Assets.xcassets */; };
 		C7272C242BB1757C00B1397C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7272C232BB1757C00B1397C /* Preview Assets.xcassets */; };
+		C73DB2602DD8DE2000C6EAFB /* EditFoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73DB25F2DD8DE2000C6EAFB /* EditFoodView.swift */; };
+		C73DB2622DD8DE5D00C6EAFB /* MyTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73DB2612DD8DE5700C6EAFB /* MyTextField.swift */; };
 		C7AF058B2BF7993A000ECD4F /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = C7AF058A2BF7993A000ECD4F /* AlertToast */; };
 		C7AFB87A2BB1C9970023C46F /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB8792BB1C9970023C46F /* SearchBar.swift */; };
 		C7AFB87D2BB255600023C46F /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AFB87C2BB255600023C46F /* UIApplication.swift */; };
@@ -89,6 +91,8 @@
 		C7272C1C2BB1757A00B1397C /* sevenOclockApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sevenOclockApp.swift; sourceTree = "<group>"; };
 		C7272C202BB1757C00B1397C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C7272C232BB1757C00B1397C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		C73DB25F2DD8DE2000C6EAFB /* EditFoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodView.swift; sourceTree = "<group>"; };
+		C73DB2612DD8DE5700C6EAFB /* MyTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTextField.swift; sourceTree = "<group>"; };
 		C7AFB8792BB1C9970023C46F /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		C7AFB87C2BB255600023C46F /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		C7AFB8802BB2F5D40023C46F /* MyFridgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFridgeView.swift; sourceTree = "<group>"; };
@@ -238,6 +242,7 @@
 		C7AFB87B2BB1C9A20023C46F /* Reusable */ = {
 			isa = PBXGroup;
 			children = (
+				C73DB2612DD8DE5700C6EAFB /* MyTextField.swift */,
 				C7AFB8792BB1C9970023C46F /* SearchBar.swift */,
 				C7AFB8842BB2F7660023C46F /* MyCapsule.swift */,
 				C7AFB8982BB3A6F50023C46F /* SelectionBar.swift */,
@@ -270,6 +275,7 @@
 				C7AFB8B42BC28AAB0023C46F /* SettingView.swift */,
 				C7FBC2172BC6E1EC0050F9A3 /* FoodListView.swift */,
 				C7D660CD2BDF688600D30CFD /* CheckItemView.swift */,
+				C73DB25F2DD8DE2000C6EAFB /* EditFoodView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -426,7 +432,9 @@
 				C7AFB8A12BB44C350023C46F /* MainView.swift in Sources */,
 				C7D660BE2BD149FC00D30CFD /* FoodDataModel.swift in Sources */,
 				C7272C1D2BB1757A00B1397C /* sevenOclockApp.swift in Sources */,
+				C73DB2622DD8DE5D00C6EAFB /* MyTextField.swift in Sources */,
 				C7AFB8812BB2F5D40023C46F /* MyFridgeView.swift in Sources */,
+				C73DB2602DD8DE2000C6EAFB /* EditFoodView.swift in Sources */,
 				C7AFB89B2BB3A9D10023C46F /* SortOption.swift in Sources */,
 				C7AFB8AB2BBF86BE0023C46F /* Recipe.swift in Sources */,
 				C7AFB8BB2BC2D9070023C46F /* FoodCoreData.xcdatamodeld in Sources */,

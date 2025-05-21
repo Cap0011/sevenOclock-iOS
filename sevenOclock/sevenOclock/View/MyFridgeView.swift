@@ -66,7 +66,9 @@ struct MyFridgeView: View {
     @State var isDateTagSelected = false
     
     @State var isShowingAddConfirmation = false
+    @State private var isShowingEditConfirmation = false
     @State var isShowingAddSheet = false
+    @State var isShowingEditSheet = false
     @State var isShowingScanner = false
     
     @State private var image = UIImage()
@@ -101,7 +103,7 @@ struct MyFridgeView: View {
                     .padding(.top, 15)
                 
                 if foods.count > 0 {
-                    FoodGridView(foods: filteredFoods, backgroundColour: Color.blue, preservation: selectedPreservation, isShowingAlert: $isShowingAlert, inputText: $inputText, selectedFood: $selectedFood)
+                    FoodGridView(foods: filteredFoods, backgroundColour: Color.blue, preservation: selectedPreservation, isShowingEditConfirmation: $isShowingEditConfirmation, inputText: $inputText, selectedFood: $selectedFood)
                         .padding(.horizontal, 20)
                         .padding(.top, 10)
                         .padding(.bottom, 15)
@@ -137,8 +139,26 @@ struct MyFridgeView: View {
             } message: {
                 Text("어떻게 냉장고에 추가하실 건가요?")
             }
+            .confirmationDialog("Edit", isPresented: $isShowingEditConfirmation) {
+                Button("식품 수정") {
+                    isShowingEditSheet.toggle()
+                }
+                
+                Button("식품 꺼내기") {
+                    isShowingAlert.toggle()
+                }
+                
+                Button("식품 삭제") {
+                    // TODO: Delete selectedFood
+                }
+                
+                Button("취소", role: .cancel) { }
+            }
             .sheet(isPresented: $isShowingAddSheet) {
                 AddFoodView(foodList: $temporaryFoodList)
+            }
+            .sheet(isPresented: $isShowingEditSheet) {
+                EditFoodView(food: selectedFood)
             }
             .sheet(isPresented: $isShowingCameraSheet) {
                 ImagePicker(sourceType: .camera, selectedImage: self.$image)
@@ -304,7 +324,7 @@ struct MyFridgeView: View {
         let backgroundColour: Color
         let preservation: Preservation
         
-        @Binding var isShowingAlert: Bool
+        @Binding var isShowingEditConfirmation: Bool
         @Binding var inputText: String
         @Binding var selectedFood: Food?
         
@@ -320,7 +340,7 @@ struct MyFridgeView: View {
                                     Task {
                                         selectedFood = food
                                         inputText = ""
-                                        isShowingAlert.toggle()
+                                        isShowingEditConfirmation.toggle()
                                     }
                                 }
                             

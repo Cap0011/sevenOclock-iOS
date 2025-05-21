@@ -1,73 +1,71 @@
 //
-//  AddFoodView.swift
+//  EditFoodView.swift
 //  sevenOclock
 //
-//  Created by Jiyoung Park on 2024/03/28.
+//  Created by Jiyoung Park on 5/18/25.
 //
 
 import SwiftUI
 import AlertToast
 
-struct AddFoodView: View {
+struct EditFoodView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.managedObjectContext) var managedObjectContext
     
-    @Binding var foodList: [TemporaryFood]
-    @State var isShowingToast = false
+    let food: Food?
+    @State private var isShowingToast = false
+    
+    @State private var temporaryFood = TemporaryFood(id: UUID())
     
     var body: some View {
-        NavigationView {
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: 0) {
-                    itemAddButton
-                        .padding(.horizontal, 20)
-                        .padding(.bottom, 30)
-                        .onTapGesture {
-                            foodList.append(TemporaryFood(id: UUID()))
-                        }
-                    
-                    ForEach($foodList, id: \.self) { $food in
-                        FoodInputCard(food: food, list: $foodList)
-                            .font(.suite(.bold, size: 15))
-                            .padding(.horizontal, 20)
-                            .padding(.bottom, 20)
-                    }
-                }
-                .padding(.vertical, 25)
+        NavigationStack {
+            VStack(spacing: 0) {
+                FoodInputCard(food: temporaryFood)
+                    .font(.suite(.bold, size: 15))
+                    .padding(.top, 10)
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 20)
+                
+                Spacer()
             }
-            .onAppear {
-                if foodList.isEmpty {
-                    foodList.append(TemporaryFood(id: UUID()))
-                }
-            }
-            .onDisappear {
-                foodList = []
-            }
+            .padding(.vertical, 25)
             .toast(isPresenting: $isShowingToast){
                 AlertToast(displayMode: .banner(.slide), type: .error(.red), title: "식품 이름을 입력해주세요.", style: .style(backgroundColor: .lightBlue, titleColor: .black, subTitleColor: .black))
+            }
+            .task {
+                if let food = food {
+                    temporaryFood.name = food.name ?? ""
+                    temporaryFood.count = Int(food.count)
+                    temporaryFood.category = food.category ?? "육류"
+                    temporaryFood.subcategory = food.subcategory ?? "소고기"
+                    temporaryFood.usebyDate = food.usebyDate ?? Date()
+                    temporaryFood.preservation = food.preservation ?? "냉장"
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Text("취소")
                         .font(.suite(.regular, size: 16))
+                        .contentShape(Rectangle())
                         .onTapGesture {
                             dismiss()
                         }
                 }
+                
                 ToolbarItem(placement: .principal) {
-                    Text("식품 입력")
+                    Text("식품 수정")
                         .font(.suite(.semibold, size: 17))
                 }
+                
                 ToolbarItem(placement: .topBarTrailing) {
                     Text("완료")
                         .font(.suite(.bold, size: 16))
+                        .contentShape(Rectangle())
                         .onTapGesture {
-                            if foodList.map({ $0.name }).contains("") {
+                            if temporaryFood.name == "" {
                                 isShowingToast.toggle()
                             } else {
-                                for food in foodList {
-                                    addFood(data: food)
-                                }
+                                updateFood(data: temporaryFood)
                                 dismiss()
                             }
                         }
@@ -77,38 +75,39 @@ struct AddFoodView: View {
             .navigationBarBackButtonHidden()
         }
     }
-    
-    var itemAddButton: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 25)
-                .foregroundStyle(.lightBlue)
-                .frame(height: 44)
+
+    private func updateFood(data: TemporaryFood) {
+        if let food = food {
+            let newFood = Food(context: managedObjectContext)
+            newFood.id = food.id
+            newFood.name = data.name
+            newFood.count = Int64(data.count)
+            newFood.category = data.category
+            newFood.subcategory = data.subcategory
+            newFood.usebyDate = data.usebyDate
+            newFood.preservation = data.preservation
+            newFood.enrollDate = food.enrollDate
             
-            Text("식품 추가")
-                .font(.suite(.semibold, size: 18))
-                .foregroundStyle(.black)
+            managedObjectContext.delete(food)
+            saveContext()
+        }
+    }
+    
+    private func saveContext() {
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print("Error saving managed object context: \(error)")
         }
     }
     
     struct FoodInputCard: View {
         @StateObject var food: TemporaryFood
-        @Binding var list: [TemporaryFood]
         
         @State var isTypingFinished = true
 
         var body: some View {
             VStack(alignment: .leading, spacing: 10) {
-                HStack {
-                    Spacer()
-                    Image(systemName: "xmark")
-                        .foregroundStyle(.grey0).opacity(0.6)
-                        .font(.system(size: 18, weight: .regular))
-                        .padding(.bottom, 5)
-                        .onTapGesture {
-                            list = list.filter { $0.id != food.id }
-                        }
-                }
-                
                 HStack(spacing: 12) {
                     Text("이름")
                     MyTextField(text: $food.name, isFinished: $isTypingFinished)
@@ -170,28 +169,5 @@ struct AddFoodView: View {
                 .frame(height: 1)
                 .foregroundStyle(.white)
         }
-    }
-
-    private func saveContext() {
-        do {
-            try managedObjectContext.save()
-        } catch {
-            print("Error saving managed object context: \(error)")
-        }
-    }
-    
-    private func addFood(data: TemporaryFood) {
-        let newFood = Food(context: managedObjectContext)
-        
-        newFood.id = data.id
-        newFood.name = data.name
-        newFood.count = Int64(data.count)
-        newFood.category = data.category
-        newFood.subcategory = data.subcategory
-        newFood.usebyDate = data.usebyDate
-        newFood.preservation = data.preservation
-        newFood.enrollDate = Date()
-        
-        saveContext()
     }
 }
