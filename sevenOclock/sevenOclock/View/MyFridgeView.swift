@@ -149,7 +149,8 @@ struct MyFridgeView: View {
                 }
                 
                 Button("식품 삭제") {
-                    // TODO: Delete selectedFood
+                    isShowingDeletedToast.toggle()
+                    deleteFood(data: selectedFood)
                 }
                 
                 Button("취소", role: .cancel) { }
@@ -371,6 +372,13 @@ struct MyFridgeView: View {
             try managedObjectContext.save()
         } catch {
             print("Error saving managed object context: \(error)")
+        }
+    }
+    
+    private func deleteFood(data: Food?) {
+        if let data = data {
+            managedObjectContext.delete(data)
+            saveContext()
         }
     }
     
