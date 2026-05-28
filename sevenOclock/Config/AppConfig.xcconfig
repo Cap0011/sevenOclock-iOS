@@ -1,0 +1,5 @@
+RECEIPT_API_URL =
+RECEIPT_API_KEY =
+BARCODE_API_KEY =
+
+#include? "Secrets.xcconfig"

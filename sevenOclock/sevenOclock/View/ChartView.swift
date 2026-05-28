@@ -230,7 +230,7 @@ struct ChartView: View {
         if orangeArray.count > 0 {
             dateSlices.append(("7일 미만", Double(orangeArray.count), .orange))
         }
-        if redArray.count > 0 {
+        if greenArray.count > 0 {
             dateSlices.append(("7일 이상", Double(greenArray.count), .green))
         }
     }

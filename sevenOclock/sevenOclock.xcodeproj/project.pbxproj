@@ -75,7 +75,7 @@
 		C7BFA1AF2BCEBB0900480C65 /* RecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BFA1AE2BCEBB0900480C65 /* RecipeViewModel.swift */; };
 		C7D660BE2BD149FC00D30CFD /* FoodDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D660BD2BD149FC00D30CFD /* FoodDataModel.swift */; };
 		C7D660C12BD2066B00D30CFD /* CarBode in Frameworks */ = {isa = PBXBuildFile; productRef = C7D660C02BD2066B00D30CFD /* CarBode */; };
-		C7D660C32BD29F2800D30CFD /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D660C22BD29F2800D30CFD /* Secret.swift */; };
+		C70D00012EDE000100000001 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70D00002EDE000100000001 /* APIKey.swift */; };
 		C7D660C72BDE4A6000D30CFD /* ReceiptResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D660C62BDE4A6000D30CFD /* ReceiptResponse.swift */; };
 		C7D660C92BDE4B1200D30CFD /* ReceiptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D660C82BDE4B1200D30CFD /* ReceiptViewModel.swift */; };
 		C7D660CE2BDF688600D30CFD /* CheckItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D660CD2BDF688600D30CFD /* CheckItemView.swift */; };
@@ -91,6 +91,8 @@
 		C7272C1C2BB1757A00B1397C /* sevenOclockApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sevenOclockApp.swift; sourceTree = "<group>"; };
 		C7272C202BB1757C00B1397C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C7272C232BB1757C00B1397C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		C70D00022EDE000100000001 /* AppConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = AppConfig.xcconfig; sourceTree = "<group>"; };
+		C70D00032EDE000100000001 /* Secrets.example.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.example.xcconfig; sourceTree = "<group>"; };
 		C73DB25F2DD8DE2000C6EAFB /* EditFoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodView.swift; sourceTree = "<group>"; };
 		C73DB2612DD8DE5700C6EAFB /* MyTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTextField.swift; sourceTree = "<group>"; };
 		C7AFB8792BB1C9970023C46F /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
@@ -127,7 +129,7 @@
 		C7BFA1AB2BCEB9D100480C65 /* RecipeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeManager.swift; sourceTree = "<group>"; };
 		C7BFA1AE2BCEBB0900480C65 /* RecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewModel.swift; sourceTree = "<group>"; };
 		C7D660BD2BD149FC00D30CFD /* FoodDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDataModel.swift; sourceTree = "<group>"; };
-		C7D660C22BD29F2800D30CFD /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
+		C70D00002EDE000100000001 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		C7D660C62BDE4A6000D30CFD /* ReceiptResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptResponse.swift; sourceTree = "<group>"; };
 		C7D660C82BDE4B1200D30CFD /* ReceiptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptViewModel.swift; sourceTree = "<group>"; };
 		C7D660CD2BDF688600D30CFD /* CheckItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckItemView.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				C7272C1B2BB1757A00B1397C /* sevenOclock */,
+				C70D00042EDE000100000001 /* Config */,
 				C7272C1A2BB1757A00B1397C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -192,6 +195,15 @@
 				C7272C192BB1757A00B1397C /* sevenOclock.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		C70D00042EDE000100000001 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				C70D00022EDE000100000001 /* AppConfig.xcconfig */,
+				C70D00032EDE000100000001 /* Secrets.example.xcconfig */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 		C7272C1B2BB1757A00B1397C /* sevenOclock */ = {
@@ -298,7 +310,7 @@
 				C7AFB8B72BC298EE0023C46F /* WebView.swift */,
 				C7AFB8BC2BC2E19E0023C46F /* PersistenceController.swift */,
 				C7BFA1AB2BCEB9D100480C65 /* RecipeManager.swift */,
-				C7D660C22BD29F2800D30CFD /* Secret.swift */,
+				C70D00002EDE000100000001 /* APIKey.swift */,
 				C7D660CF2BE0D3BE00D30CFD /* ImagePicker.swift */,
 			);
 			path = Helper;
@@ -458,7 +470,7 @@
 				C7AFB8A92BBF85CD0023C46F /* RecipeView.swift in Sources */,
 				C7AFB8AD2BC04F8D0023C46F /* RecipeSortOption.swift in Sources */,
 				C7D660CE2BDF688600D30CFD /* CheckItemView.swift in Sources */,
-				C7D660C32BD29F2800D30CFD /* Secret.swift in Sources */,
+				C70D00012EDE000100000001 /* APIKey.swift in Sources */,
 				C7FBC2182BC6E1EC0050F9A3 /* FoodListView.swift in Sources */,
 				C7BFA1AF2BCEBB0900480C65 /* RecipeViewModel.swift in Sources */,
 				C7AFB8992BB3A6F50023C46F /* SelectionBar.swift in Sources */,
@@ -592,12 +604,13 @@
 		};
 		C7272C282BB1757C00B1397C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C70D00022EDE000100000001 /* AppConfig.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = sevenOclock/sevenOclock.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"sevenOclock/Preview Content\"";
 				DEVELOPMENT_TEAM = HY8Y957QK3;
 				ENABLE_PREVIEWS = YES;
@@ -607,6 +620,9 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_NSCameraUsageDescription = "영수증 촬영 및 바코드 스캔을 위해 카메라 접근 권한이 필요합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "영수증 촬영 및 바코드 스캔을 위해 접근 권한이 필요합니다.";
+				INFOPLIST_KEY_BarcodeAPIKey = "$(BARCODE_API_KEY)";
+				INFOPLIST_KEY_ReceiptAPIKey = "$(RECEIPT_API_KEY)";
+				INFOPLIST_KEY_ReceiptAPIURL = "$(RECEIPT_API_URL)";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -618,7 +634,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jio.sevenOclock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -633,12 +649,13 @@
 		};
 		C7272C292BB1757C00B1397C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C70D00022EDE000100000001 /* AppConfig.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = sevenOclock/sevenOclock.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"sevenOclock/Preview Content\"";
 				DEVELOPMENT_TEAM = HY8Y957QK3;
 				ENABLE_PREVIEWS = YES;
@@ -648,6 +665,9 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_NSCameraUsageDescription = "영수증 촬영 및 바코드 스캔을 위해 카메라 접근 권한이 필요합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "영수증 촬영 및 바코드 스캔을 위해 접근 권한이 필요합니다.";
+				INFOPLIST_KEY_BarcodeAPIKey = "$(BARCODE_API_KEY)";
+				INFOPLIST_KEY_ReceiptAPIKey = "$(RECEIPT_API_KEY)";
+				INFOPLIST_KEY_ReceiptAPIURL = "$(RECEIPT_API_URL)";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -659,7 +679,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jio.sevenOclock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
