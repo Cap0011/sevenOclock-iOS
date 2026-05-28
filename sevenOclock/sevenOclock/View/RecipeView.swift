@@ -301,11 +301,11 @@ struct RecipeView: View {
         if !tags.isEmpty && isDateTagSelected {
             let myIngredients = foods.filter({$0.subcategory != "기타" && $0.subcategory != nil}).map({$0.subcategory})
             
-            filteredRecipes = viewModel.recipes.filter{
-                for ingredient in myIngredients {
-                    return $0.ingredients.contains(ingredient!)
+            filteredRecipes = viewModel.recipes.filter { recipe in
+                myIngredients.contains { ingredient in
+                    guard let ingredient else { return false }
+                    return recipe.ingredients.contains(ingredient)
                 }
-                return false
             }
         }
     }

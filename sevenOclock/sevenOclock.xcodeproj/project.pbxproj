@@ -75,7 +75,7 @@
 		C7BFA1AF2BCEBB0900480C65 /* RecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BFA1AE2BCEBB0900480C65 /* RecipeViewModel.swift */; };
 		C7D660BE2BD149FC00D30CFD /* FoodDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D660BD2BD149FC00D30CFD /* FoodDataModel.swift */; };
 		C7D660C12BD2066B00D30CFD /* CarBode in Frameworks */ = {isa = PBXBuildFile; productRef = C7D660C02BD2066B00D30CFD /* CarBode */; };
-		C7D660C32BD29F2800D30CFD /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D660C22BD29F2800D30CFD /* Secret.swift */; };
+		C70D00012EDE000100000001 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70D00002EDE000100000001 /* APIKey.swift */; };
 		C7D660C72BDE4A6000D30CFD /* ReceiptResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D660C62BDE4A6000D30CFD /* ReceiptResponse.swift */; };
 		C7D660C92BDE4B1200D30CFD /* ReceiptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D660C82BDE4B1200D30CFD /* ReceiptViewModel.swift */; };
 		C7D660CE2BDF688600D30CFD /* CheckItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D660CD2BDF688600D30CFD /* CheckItemView.swift */; };
@@ -127,7 +127,7 @@
 		C7BFA1AB2BCEB9D100480C65 /* RecipeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeManager.swift; sourceTree = "<group>"; };
 		C7BFA1AE2BCEBB0900480C65 /* RecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewModel.swift; sourceTree = "<group>"; };
 		C7D660BD2BD149FC00D30CFD /* FoodDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDataModel.swift; sourceTree = "<group>"; };
-		C7D660C22BD29F2800D30CFD /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
+		C70D00002EDE000100000001 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		C7D660C62BDE4A6000D30CFD /* ReceiptResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptResponse.swift; sourceTree = "<group>"; };
 		C7D660C82BDE4B1200D30CFD /* ReceiptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptViewModel.swift; sourceTree = "<group>"; };
 		C7D660CD2BDF688600D30CFD /* CheckItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckItemView.swift; sourceTree = "<group>"; };
@@ -298,7 +298,7 @@
 				C7AFB8B72BC298EE0023C46F /* WebView.swift */,
 				C7AFB8BC2BC2E19E0023C46F /* PersistenceController.swift */,
 				C7BFA1AB2BCEB9D100480C65 /* RecipeManager.swift */,
-				C7D660C22BD29F2800D30CFD /* Secret.swift */,
+				C70D00002EDE000100000001 /* APIKey.swift */,
 				C7D660CF2BE0D3BE00D30CFD /* ImagePicker.swift */,
 			);
 			path = Helper;
@@ -458,7 +458,7 @@
 				C7AFB8A92BBF85CD0023C46F /* RecipeView.swift in Sources */,
 				C7AFB8AD2BC04F8D0023C46F /* RecipeSortOption.swift in Sources */,
 				C7D660CE2BDF688600D30CFD /* CheckItemView.swift in Sources */,
-				C7D660C32BD29F2800D30CFD /* Secret.swift in Sources */,
+				C70D00012EDE000100000001 /* APIKey.swift in Sources */,
 				C7FBC2182BC6E1EC0050F9A3 /* FoodListView.swift in Sources */,
 				C7BFA1AF2BCEBB0900480C65 /* RecipeViewModel.swift in Sources */,
 				C7AFB8992BB3A6F50023C46F /* SelectionBar.swift in Sources */,
@@ -597,7 +597,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = sevenOclock/sevenOclock.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"sevenOclock/Preview Content\"";
 				DEVELOPMENT_TEAM = HY8Y957QK3;
 				ENABLE_PREVIEWS = YES;
@@ -618,7 +618,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jio.sevenOclock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -638,7 +638,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = sevenOclock/sevenOclock.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"sevenOclock/Preview Content\"";
 				DEVELOPMENT_TEAM = HY8Y957QK3;
 				ENABLE_PREVIEWS = YES;
@@ -659,7 +659,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jio.sevenOclock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
